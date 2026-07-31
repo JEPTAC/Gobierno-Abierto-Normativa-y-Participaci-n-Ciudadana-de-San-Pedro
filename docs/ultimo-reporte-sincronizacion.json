@@ -1,0 +1,5 @@
+{
+  "completedAt": null,
+  "ok": null,
+  "message": "El primer informe será generado automáticamente al ejecutar el flujo de sincronización en GitHub Actions."
+}

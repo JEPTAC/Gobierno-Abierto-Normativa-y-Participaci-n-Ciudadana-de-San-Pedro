@@ -1,26 +1,230 @@
 <!doctype html>
 <html lang="es">
 <head>
-  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="description" content="Sección permanente para procesos activos e históricos, con cargo, versión pública de la hoja de vida, periodo de observaciones, responsable y canal ciudadano."><meta name="theme-color" content="#01256A">
-  <title>Hojas de vida sometidas a consideración ciudadana | Alcaldía de San Pedro</title>
-  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="section-pages.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Directorio público de servidores y servidoras de la Alcaldía de San Pedro, hojas de vida oficiales, procesos sometidos a consideración ciudadana y canal de observaciones.">
+  <meta name="theme-color" content="#071c46">
+  <meta property="og:title" content="Talento público abierto | Alcaldía de San Pedro">
+  <meta property="og:description" content="Directorio verificable, hojas de vida, SIGEP y participación ciudadana.">
+  <title>Talento público abierto | Alcaldía de San Pedro</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="hojas-de-vida.css">
 </head>
-<body class="section-page-body" data-category="cv">
+<body class="talent-page">
 <a class="skip-link" href="#contenido">Saltar al contenido</a>
-<div class="govco-bar"><div class="container govco-inner"><a href="https://www.gov.co/" target="_blank" rel="noopener noreferrer"><img src="assets/govco-logo.svg" alt="GOV.CO"></a><span>Portal Único del Estado Colombiano</span></div></div>
-<header class="section-page-header"><div class="container"><a class="brand" href="index.html"><img src="assets/escudo-san-pedro.png" alt="Escudo del municipio de San Pedro"><span class="brand-copy"><strong>Alcaldía Municipal de San Pedro</strong><small>Gobierno Abierto y Normativa</small></span></a><div class="section-page-actions"><a class="minor-link" href="https://www.sanpedro-valle.gov.co/" target="_blank" rel="noopener noreferrer">Sede electrónica ↗</a><a class="btn btn-outline" href="index.html">Volver a la micropágina</a></div></div></header>
+
+<div class="govco-bar">
+  <div class="container govco-inner">
+    <a href="https://www.gov.co/" target="_blank" rel="noopener noreferrer" aria-label="Abrir GOV.CO">
+      <img src="assets/govco-logo.svg" alt="GOV.CO">
+    </a>
+    <span>Portal Único del Estado Colombiano</span>
+  </div>
+</div>
+
+<header class="talent-header">
+  <div class="container talent-header-inner">
+    <a class="talent-brand" href="index.html" aria-label="Volver a Gobierno Abierto y Normativa">
+      <img src="assets/escudo-san-pedro.png" alt="Escudo de San Pedro, Valle del Cauca">
+      <span><strong>Alcaldía Municipal de San Pedro</strong><small>Gobierno Abierto · Talento Público</small></span>
+    </a>
+    <nav class="talent-nav" aria-label="Navegación principal">
+      <a href="#directorio">Directorio</a>
+      <a href="#consideracion">Consideración ciudadana</a>
+      <a href="#participar">Participar</a>
+      <a href="#fuentes">Fuentes</a>
+      <a class="talent-nav-primary" href="index.html">Micropágina normativa</a>
+    </nav>
+  </div>
+</header>
+
 <main id="contenido">
-<section class="section-hero"><div class="container"><nav class="breadcrumb" aria-label="Migas de pan"><a href="index.html">Inicio</a><span>/</span><span aria-current="page">Hojas de vida sometidas a consideración ciudadana</span></nav><p class="eyebrow">Mérito, transparencia y observaciones</p><h1>Hojas de vida sometidas a consideración ciudadana</h1><p>Sección permanente para procesos activos e históricos, con cargo, versión pública de la hoja de vida, periodo de observaciones, responsable y canal ciudadano.</p><div class="section-hero-meta"><span>Sección oficial permanente</span><span>Última verificación: <strong id="lastUpdatedPage"></strong></span><span>Fuente única con enlaces verificables</span></div></div></section>
-<section class="section-page-main"><div class="container">
-<div class="cv-public-notice"><strong>Información importante:</strong> La sección no sustituye las reglas de cada convocatoria. Cuando no exista un proceso activo, se mantiene publicada la constancia de estado y el archivo histórico verificable.</div>
+  <section class="talent-hero">
+    <div class="talent-orb talent-orb-one" aria-hidden="true"></div>
+    <div class="talent-orb talent-orb-two" aria-hidden="true"></div>
+    <div class="talent-grid-pattern" aria-hidden="true"></div>
+    <div class="container talent-hero-grid">
+      <div class="talent-hero-copy">
+        <nav class="talent-breadcrumb" aria-label="Migas de pan">
+          <a href="index.html">Gobierno abierto</a><span aria-hidden="true">/</span><span aria-current="page">Talento público</span>
+        </nav>
+        <p class="talent-kicker"><span></span>Información pública verificable</p>
+        <h1>Personas al servicio de <em>San Pedro</em></h1>
+        <p class="talent-lead">Consulta el directorio institucional, las hojas de vida públicas enlazadas a la fuente oficial y los procesos sometidos a consideración ciudadana. Cada registro conserva trazabilidad, fecha de verificación y canal de participación.</p>
+        <div class="talent-hero-actions">
+          <a class="talent-btn talent-btn-gold" href="#directorio">Explorar funcionarios</a>
+          <a class="talent-btn talent-btn-glass" href="#participar">Presentar observación</a>
+        </div>
+        <div class="talent-trust-row" aria-label="Características del servicio">
+          <span><b>✓</b> Fuente institucional</span>
+          <span><b>✓</b> Enlaces a SIGEP II</span>
+          <span><b>✓</b> Sincronización diaria</span>
+          <span><b>✓</b> Participación trazable</span>
+        </div>
+      </div>
+      <aside class="talent-hero-card" aria-label="Estado de actualización">
+        <div class="talent-live-badge"><span></span> Actualización automática habilitada</div>
+        <div class="talent-seal-wrap">
+          <div class="talent-seal"><img src="assets/escudo-san-pedro.png" alt=""></div>
+          <div><p>Fuente maestra</p><strong>Directorio institucional</strong><small>Alcaldía de San Pedro, Valle</small></div>
+        </div>
+        <div class="talent-sync-line">
+          <div><span>Última actualización disponible</span><strong id="syncDate">31 de julio de 2026</strong></div>
+          <div><span>Próxima revisión automática</span><strong>Diaria · 5:30 a. m.</strong></div>
+        </div>
+        <a class="talent-source-link" href="https://www.sanpedro-valle.gov.co/tema/directorio-de-funcionarios" target="_blank" rel="noopener noreferrer">Ver directorio en la sede electrónica <span aria-hidden="true">↗</span></a>
+      </aside>
+    </div>
+  </section>
 
-<div class="section-summary-grid"><article><strong id="summaryTotal">0</strong><span id="sectionTotalLabel">Publicaciones</span></article><article><strong id="summaryCurrent">0</strong><span>Vigentes, activos o abiertos</span></article><article><strong id="summaryYear">0</strong><span>Vigencias representadas</span></article></div>
-<div class="section-control-panel"><label class="search-wide"><span>Buscar</span><input id="sectionSearch" type="search" placeholder="Buscar por asunto, número, responsable o palabra clave"></label><label><span>Año</span><select id="sectionYear"></select></label><label><span>Estado</span><select id="sectionStatus"></select></label><button class="btn btn-outline" type="button" id="sectionClear">Limpiar filtros</button></div>
-<div class="section-result-list" id="sectionResults"></div>
+  <section class="talent-stats" aria-label="Indicadores del directorio">
+    <div class="container talent-stats-grid">
+      <article><span class="talent-stat-icon" aria-hidden="true">01</span><div><strong id="statOfficials">0</strong><small>Perfiles públicos identificados</small></div></article>
+      <article><span class="talent-stat-icon" aria-hidden="true">02</span><div><strong id="statDepartments">0</strong><small>Dependencias representadas</small></div></article>
+      <article><span class="talent-stat-icon" aria-hidden="true">03</span><div><strong id="statCvLinks">0</strong><small>Rutas de hoja de vida</small></div></article>
+      <article><span class="talent-stat-icon" aria-hidden="true">04</span><div><strong id="statProcesses">0</strong><small>Procesos de consideración</small></div></article>
+    </div>
+  </section>
 
-<section class="section-requirements"><h2>Cobertura mínima de esta sección</h2><ul><li>Publicación de la versión pública de la hoja de vida, sin datos sensibles o innecesarios.</li><li>Identificación del empleo, cargo o designación y dependencia responsable.</li><li>Fecha inicial y final del periodo de observaciones ciudadanas.</li><li>Canal de comentarios, tratamiento de datos y conservación del archivo histórico.</li></ul></section>
-<p class="source-footnote">La información se consolida para facilitar la consulta ciudadana. La autenticidad, vigencia y efectos jurídicos corresponden al documento o publicación de origen enlazado en cada ficha.</p>
-</div></section></main>
-<footer class="section-page-footer"><div class="container"><div class="footer-mini"><img src="assets/escudo-san-pedro.png" alt=""><div><strong>Alcaldía Municipal de San Pedro</strong><br><small>Valle del Cauca · NIT 800.100.526-3</small></div></div><div><a href="index.html#participar">Participar</a> · <a href="politica-privacidad.html">Privacidad</a> · <a href="https://www.sanpedro-valle.gov.co/peticiones-quejas-reclamos" target="_blank" rel="noopener noreferrer">PQRSD</a></div></div></footer>
-<script type="module" src="section.js"></script></body></html>
+  <section class="talent-section" id="directorio">
+    <div class="container">
+      <div class="talent-section-head">
+        <div>
+          <p class="talent-overline">Directorio público</p>
+          <h2>Funcionarios y servidores de la Alcaldía</h2>
+          <p>Los datos se muestran desde publicaciones oficiales. La hoja de vida se consulta en el perfil institucional o en SIGEP II, evitando replicar información sensible o innecesaria.</p>
+        </div>
+        <a class="talent-text-link" href="https://www.sanpedro-valle.gov.co/buscar?q=hoja%20de%20vida" target="_blank" rel="noopener noreferrer">Consultar búsqueda oficial ↗</a>
+      </div>
+
+      <div class="talent-filter-shell" role="search" aria-label="Filtrar directorio">
+        <label class="talent-search-field"><span>Buscar por nombre, cargo o dependencia</span><div><span aria-hidden="true">⌕</span><input id="officialSearch" type="search" autocomplete="off" placeholder="Ej.: Control Interno, Alcalde, Gobierno"></div></label>
+        <label><span>Dependencia</span><select id="departmentFilter"><option value="">Todas las dependencias</option></select></label>
+        <label><span>Estado</span><select id="statusFilter"><option value="">Todos</option><option value="Activo">Activo</option><option value="Histórico">Histórico</option></select></label>
+        <button class="talent-filter-clear" id="clearOfficialFilters" type="button">Limpiar</button>
+      </div>
+
+      <div class="talent-directory-toolbar">
+        <p id="resultSummary" aria-live="polite">Cargando directorio…</p>
+        <div class="talent-directory-actions">
+          <a class="talent-download" href="docs/directorio-funcionarios-verificados.csv" download>Descargar CSV</a>
+          <div class="talent-view-toggle" aria-label="Cambiar vista">
+            <button class="is-active" type="button" data-view="grid" aria-pressed="true">Cuadrícula</button>
+            <button type="button" data-view="list" aria-pressed="false">Lista</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="official-grid" id="officialGrid" aria-live="polite"></div>
+
+      <div class="talent-source-banner">
+        <div class="talent-source-mark">SIGEP</div>
+        <div><p>Consulta nacional complementaria</p><h3>Directorio de servidores públicos de Función Pública</h3><span>Permite validar información de servidores, empleados y contratistas reportada por las entidades.</span></div>
+        <a class="talent-btn talent-btn-blue" href="https://www.funcionpublica.gov.co/sigep2/directorio" target="_blank" rel="noopener noreferrer">Abrir SIGEP II ↗</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="talent-section talent-section-soft" id="consideracion">
+    <div class="container">
+      <div class="talent-section-head">
+        <div>
+          <p class="talent-overline">Mérito y control social</p>
+          <h2>Hojas de vida sometidas a consideración ciudadana</h2>
+          <p>Los procesos aplicables deben publicar la hoja de vida del aspirante, el cargo, la dependencia responsable, el plazo de observaciones y el canal para recibirlas. Los procesos cerrados permanecen como archivo histórico.</p>
+        </div>
+        <span class="talent-law-chip">Periodo visible y verificable</span>
+      </div>
+      <div class="consideration-grid" id="considerationGrid"></div>
+      <article class="talent-protocol-card">
+        <div class="talent-protocol-number">6</div>
+        <div><p class="talent-overline">Protocolo de publicación</p><h3>Ciclo automático de cada proceso</h3></div>
+        <ol>
+          <li>Recepción y validación de la hoja de vida.</li>
+          <li>Aplicación de versión pública y minimización de datos.</li>
+          <li>Publicación del cargo y periodo de observaciones.</li>
+          <li>Recepción ciudadana con código de seguimiento.</li>
+          <li>Traslado a Talento Humano y respuesta institucional.</li>
+          <li>Cierre y conservación del archivo histórico.</li>
+        </ol>
+      </article>
+    </div>
+  </section>
+
+  <section class="talent-section talent-participation" id="participar">
+    <div class="container talent-participation-grid">
+      <div class="talent-participation-copy">
+        <p class="talent-overline">Participación ciudadana</p>
+        <h2>Comenta, corrige o presenta una observación</h2>
+        <p>Selecciona un funcionario o proceso. Tu mensaje se radica de forma privada y llega al panel institucional. Solo se publica una respuesta anonimizada cuando la Administración la aprueba.</p>
+        <ul>
+          <li>Observaciones sobre una hoja de vida en consideración.</li>
+          <li>Correcciones sobre cargo, dependencia o enlace institucional.</li>
+          <li>Solicitudes de actualización del directorio.</li>
+          <li>Alertas de enlace roto o información desactualizada.</li>
+        </ul>
+        <div class="talent-privacy-note"><strong>Protección de datos:</strong> no incluyas números de identificación, direcciones, datos de salud ni información sensible de terceros.</div>
+      </div>
+      <form class="talent-comment-form" id="officialObservationForm" novalidate>
+        <div class="talent-form-head"><span>Canal oficial</span><h3>Radicar observación</h3><p>Los campos marcados con * son obligatorios.</p></div>
+        <label><span>Funcionario o proceso *</span><select id="observationTarget" required><option value="">Selecciona una opción</option></select></label>
+        <div class="talent-form-two">
+          <label><span>Nombre *</span><input id="observationName" name="name" required minlength="2" maxlength="120" autocomplete="name"></label>
+          <label><span>Correo electrónico *</span><input id="observationEmail" name="email" type="email" required maxlength="180" autocomplete="email"></label>
+        </div>
+        <label><span>Tipo de participación *</span><select id="observationType" required><option value="">Selecciona</option><option>Observación a hoja de vida</option><option>Corrección de información</option><option>Enlace desactualizado</option><option>Solicitud de actualización</option><option>Control social</option></select></label>
+        <label><span>Mensaje *</span><textarea id="observationText" required minlength="10" maxlength="5000" rows="6" placeholder="Describe de forma clara y respetuosa la observación."></textarea><small><span id="observationCount">0</span>/5000 caracteres</small></label>
+        <label class="talent-check"><input id="observationConsent" type="checkbox" required><span>Autorizo el tratamiento de datos personales para gestionar esta observación y declaro que la información aportada es veraz. *</span></label>
+        <input id="officialWebsiteField" class="talent-honeypot" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <button class="talent-btn talent-btn-gold talent-submit" id="submitOfficialObservation" type="submit">Radicar observación</button>
+        <div class="talent-form-message" id="officialFormMessage" role="status" aria-live="polite"></div>
+      </form>
+    </div>
+  </section>
+
+  <section class="talent-section" id="seguimiento">
+    <div class="container">
+      <div class="talent-tracking-card">
+        <div><p class="talent-overline">Trazabilidad</p><h2>Consulta el estado de tu observación</h2><p>Ingresa el código entregado al momento de la radicación.</p></div>
+        <div class="talent-tracking-form"><label><span>Código de seguimiento</span><input id="officialTrackingCode" placeholder="SP-NOR-2026-ABC123" maxlength="20"></label><button class="talent-btn talent-btn-blue" id="searchOfficialTracking" type="button">Consultar</button></div>
+        <div class="talent-tracking-result" id="officialTrackingResult" aria-live="polite"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="talent-section talent-sources" id="fuentes">
+    <div class="container">
+      <div class="talent-section-head"><div><p class="talent-overline">Trazabilidad documental</p><h2>Fuentes oficiales y mecanismo de sincronización</h2><p>La página no sustituye las fuentes de origen: las organiza, enlaza y verifica periódicamente.</p></div></div>
+      <div class="talent-source-grid">
+        <a href="https://www.sanpedro-valle.gov.co/tema/directorio-de-funcionarios" target="_blank" rel="noopener noreferrer"><span>01</span><div><strong>Directorio de funcionarios</strong><small>Fuente principal de perfiles institucionales.</small></div><b>↗</b></a>
+        <a href="https://www.sanpedro-valle.gov.co/directorio-de-funcionarios/directorio-de-funcionarios-269806" target="_blank" rel="noopener noreferrer"><span>02</span><div><strong>Directorio consolidado</strong><small>Publicación institucional con funcionarios de planta.</small></div><b>↗</b></a>
+        <a href="https://www.sanpedro-valle.gov.co/buscar?q=hoja%20de%20vida" target="_blank" rel="noopener noreferrer"><span>03</span><div><strong>Búsqueda de hojas de vida</strong><small>Resultados publicados en la sede electrónica.</small></div><b>↗</b></a>
+        <a href="https://www.funcionpublica.gov.co/sigep2/directorio" target="_blank" rel="noopener noreferrer"><span>04</span><div><strong>SIGEP II</strong><small>Consulta nacional de servidores y contratistas.</small></div><b>↗</b></a>
+      </div>
+      <div class="talent-sync-explainer">
+        <div class="talent-sync-visual" aria-hidden="true"><span>Sede electrónica</span><i>→</i><span>Verificación automática</span><i>→</i><span>Micropágina</span></div>
+        <div><h3>Actualización automática sin duplicar la fuente</h3><p>Un flujo programado de GitHub Actions revisa diariamente el directorio institucional, descubre perfiles nuevos, actualiza datos visibles y conserva el historial. Si la fuente no responde, mantiene la última versión válida y genera un informe de sincronización.</p></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="talent-footer">
+  <div class="container talent-footer-grid">
+    <div class="talent-footer-brand"><img src="assets/escudo-san-pedro.png" alt=""><div><strong>Alcaldía Municipal de San Pedro</strong><span>Valle del Cauca · NIT 800.100.526-3</span></div></div>
+    <div><strong>Transparencia y servicio</strong><a href="index.html">Gobierno Abierto</a><a href="politica-privacidad.html">Política de privacidad</a><a href="https://www.sanpedro-valle.gov.co/peticiones-quejas-reclamos" target="_blank" rel="noopener noreferrer">PQRSD</a></div>
+    <div><strong>Fuentes externas</strong><a href="https://www.sanpedro-valle.gov.co/" target="_blank" rel="noopener noreferrer">Sede electrónica</a><a href="https://www.funcionpublica.gov.co/sigep2/directorio" target="_blank" rel="noopener noreferrer">SIGEP II</a><a href="https://www.gov.co/" target="_blank" rel="noopener noreferrer">GOV.CO</a></div>
+  </div>
+  <div class="container talent-footer-bottom"><span>Información pública organizada para facilitar el control social.</span><span>Última verificación: <b id="footerSyncDate">31 de julio de 2026</b></span></div>
+</footer>
+
+<dialog class="talent-profile-dialog" id="profileDialog" aria-labelledby="profileDialogTitle">
+  <button class="talent-dialog-close" id="closeProfileDialog" type="button" aria-label="Cerrar">×</button>
+  <div id="profileDialogBody"></div>
+</dialog>
+
+<script type="module" src="hojas-de-vida.js"></script>
+</body>
+</html>

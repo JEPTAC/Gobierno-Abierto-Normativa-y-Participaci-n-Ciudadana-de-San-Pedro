@@ -1,0 +1,231 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-07-31T21:40:00-05:00",
+  "source": {
+    "directory": "https://www.sanpedro-valle.gov.co/tema/directorio-de-funcionarios",
+    "consolidated": "https://www.sanpedro-valle.gov.co/directorio-de-funcionarios/directorio-de-funcionarios-269806",
+    "search": "https://www.sanpedro-valle.gov.co/buscar?q=hoja%20de%20vida",
+    "sigep": "https://www.funcionpublica.gov.co/sigep2/directorio"
+  },
+  "sync": {
+    "mode": "github-actions-daily",
+    "schedule": "10:30 UTC / 05:30 Colombia",
+    "status": "Preparado para sincronización automática",
+    "lastSuccessfulRun": null,
+    "discoveredProfiles": 10,
+    "notes": "El archivo inicial contiene perfiles individuales públicamente localizados. El flujo automático recorre el directorio institucional, incorpora nuevos perfiles y actualiza los existentes sin eliminar el histórico."
+  },
+  "officials": [
+    {
+      "id": "alex-armando-garcia-lozano",
+      "name": "Alex Armando García Lozano",
+      "position": "Técnico Administrativo",
+      "department": "Secretaría de Planeación",
+      "email": "planeacion@sanpedro-valle.gov.co",
+      "phone": "(032) 223 83 56 Ext. 19",
+      "profileUrl": "https://sanpedro-valle.gov.co/directorio-de-funcionarios/alex-armando-garcia-lozano",
+      "sigepUrl": "https://www.funcionpublica.gov.co/sigep2/directorio",
+      "cvUrl": "https://sanpedro-valle.gov.co/directorio-de-funcionarios/alex-armando-garcia-lozano",
+      "status": "Activo",
+      "sourceStatus": "Verificado en el directorio institucional",
+      "sourceUpdatedAt": "2026-07-31",
+      "photoUrl": "",
+      "tags": [
+        "planeación",
+        "técnico administrativo"
+      ]
+    },
+    {
+      "id": "carlos-humberto-giraldo-acevedo",
+      "name": "Carlos Humberto Giraldo Acevedo",
+      "position": "Comisario de Familia",
+      "department": "Comisaría de Familia",
+      "email": "comisariadefamilia@sanpedro-valle.gov.co",
+      "phone": "(032) 223 8356 Ext. 14",
+      "profileUrl": "https://www.sanpedro-valle.gov.co/directorio-de-funcionarios/carlos-humberto-giraldo-acevedo",
+      "sigepUrl": "https://www.funcionpublica.gov.co/sigep2/directorio",
+      "cvUrl": "https://www.sanpedro-valle.gov.co/directorio-de-funcionarios/carlos-humberto-giraldo-acevedo",
+      "status": "Activo",
+      "sourceStatus": "Verificado en el directorio institucional",
+      "sourceUpdatedAt": "2026-07-31",
+      "photoUrl": "",
+      "tags": [
+        "familia",
+        "protección",
+        "atención ciudadana"
+      ]
+    },
+    {
+      "id": "crisanto-lopeda-zuniga",
+      "name": "Crisanto Lopeda Zuñiga",
+      "position": "Auxiliar Administrativo",
+      "department": "Secretaría General y Desarrollo Institucional",
+      "email": "secretariageneral@sanpedro-valle.gov.co",
+      "phone": "(032) 223 83 56",
+      "profileUrl": "https://www.sanpedro-valle.gov.co/directorio-de-funcionarios/crisanto-lopeda-zuniga",
+      "sigepUrl": "https://www.funcionpublica.gov.co/sigep2/directorio",
+      "cvUrl": "https://www.sanpedro-valle.gov.co/directorio-de-funcionarios/crisanto-lopeda-zuniga",
+      "status": "Activo",
+      "sourceStatus": "Verificado en el directorio institucional",
+      "sourceUpdatedAt": "2026-07-31",
+      "photoUrl": "",
+      "tags": [
+        "administrativo",
+        "secretaría general"
+      ]
+    },
+    {
+      "id": "diego-fernando-mendoza",
+      "name": "Diego Fernando Mendoza",
+      "position": "Alcalde Municipal",
+      "department": "Despacho del Alcalde",
+      "email": "alcaldia@sanpedro-valle.gov.co",
+      "phone": "(032) 223 8356",
+      "profileUrl": "https://www.sanpedro-valle.gov.co/directorio-de-funcionarios/jhon-jaime-ospina-loaiza",
+      "sigepUrl": "https://www.funcionpublica.gov.co/sigep2/directorio",
+      "cvUrl": "https://www.sanpedro-valle.gov.co/directorio-de-funcionarios/jhon-jaime-ospina-loaiza",
+      "status": "Activo",
+      "sourceStatus": "Verificado en el directorio institucional",
+      "sourceUpdatedAt": "2026-07-31",
+      "photoUrl": "",
+      "tags": [
+        "alcalde",
+        "despacho",
+        "dirección institucional"
+      ]
+    },
+    {
+      "id": "einar-ernesto-gonzalez-bedoya",
+      "name": "Einar Ernesto González Bedoya",
+      "position": "Secretario General y Desarrollo Institucional",
+      "department": "Secretaría General y Desarrollo Institucional",
+      "email": "secretariageneral@sanpedro-valle.gov.co",
+      "phone": "(032) 223 8356 Ext. 24",
+      "profileUrl": "https://www.sanpedro-valle.gov.co/directorio-de-funcionarios/einar-ernesto-gonzalez-bedoya",
+      "sigepUrl": "https://www.funcionpublica.gov.co/sigep2/directorio",
+      "cvUrl": "https://www.sanpedro-valle.gov.co/directorio-de-funcionarios/einar-ernesto-gonzalez-bedoya",
+      "status": "Activo",
+      "sourceStatus": "Verificado en el directorio institucional",
+      "sourceUpdatedAt": "2026-07-31",
+      "photoUrl": "",
+      "tags": [
+        "secretaría general",
+        "desarrollo institucional",
+        "talento humano"
+      ]
+    },
+    {
+      "id": "jimmy-alexander-alzate-c",
+      "name": "Jimmy Alexander Alzate C.",
+      "position": "Técnico Administrativo",
+      "department": "Dependencia por verificar en la fuente institucional",
+      "email": "",
+      "phone": "",
+      "profileUrl": "https://sanpedro-valle.gov.co/directorio-de-funcionarios/cristian-caicedo",
+      "sigepUrl": "https://www.funcionpublica.gov.co/sigep2/directorio",
+      "cvUrl": "https://sanpedro-valle.gov.co/directorio-de-funcionarios/cristian-caicedo",
+      "status": "Activo",
+      "sourceStatus": "Perfil localizado; dependencia y datos de contacto pendientes de actualización en la fuente",
+      "sourceUpdatedAt": "2026-07-31",
+      "photoUrl": "",
+      "tags": [
+        "técnico administrativo",
+        "directorio de funcionarios"
+      ]
+    },
+    {
+      "id": "laura-cristina-gonzalez-calero",
+      "name": "Laura Cristina González Calero",
+      "position": "Secretaria de Gobierno, Convivencia y Seguridad Ciudadana",
+      "department": "Secretaría de Gobierno, Convivencia y Seguridad Ciudadana",
+      "email": "secretariadegobiernosanpedro@hotmail.com",
+      "phone": "(032) 223 8356",
+      "profileUrl": "https://www.sanpedro-valle.gov.co/directorio-de-funcionarios/laura-cristina-gonzalez-calero",
+      "sigepUrl": "https://www.funcionpublica.gov.co/sigep2/directorio",
+      "cvUrl": "https://www.sanpedro-valle.gov.co/directorio-de-funcionarios/laura-cristina-gonzalez-calero",
+      "status": "Activo",
+      "sourceStatus": "Verificado en el directorio institucional",
+      "sourceUpdatedAt": "2026-07-31",
+      "photoUrl": "",
+      "tags": [
+        "gobierno",
+        "convivencia",
+        "seguridad ciudadana"
+      ]
+    },
+    {
+      "id": "martha-lucia-perez-guerra",
+      "name": "Martha Lucía Pérez Guerra",
+      "position": "Coordinadora de Educación, Cultura y Deporte",
+      "department": "Educación, Cultura y Deporte",
+      "email": "educacion@sanpedro-valle.gov.co",
+      "phone": "(032) 223 8356 Ext. 26",
+      "profileUrl": "https://www.sanpedro-valle.gov.co/directorio-de-funcionarios/leidy-yuliana-holguin-nunez",
+      "sigepUrl": "https://www.funcionpublica.gov.co/sigep2/directorio",
+      "cvUrl": "https://www.sanpedro-valle.gov.co/directorio-de-funcionarios/leidy-yuliana-holguin-nunez",
+      "status": "Activo",
+      "sourceStatus": "Verificado en el directorio institucional",
+      "sourceUpdatedAt": "2026-07-31",
+      "photoUrl": "",
+      "tags": [
+        "educación",
+        "cultura",
+        "deporte"
+      ]
+    },
+    {
+      "id": "melida-vasquez-vasquez",
+      "name": "Melida Vásquez Vásquez",
+      "position": "Jefe de Control Interno",
+      "department": "Oficina de Control Interno",
+      "email": "controlinterno@sanpedro-valle.gov.co",
+      "phone": "(032) 223 83 56 Ext. 31",
+      "profileUrl": "https://www.sanpedro-valle.gov.co/directorio-de-funcionarios/melida-vasquez-vasquez",
+      "sigepUrl": "https://www.funcionpublica.gov.co/sigep2/directorio",
+      "cvUrl": "https://www.sanpedro-valle.gov.co/directorio-de-funcionarios/melida-vasquez-vasquez",
+      "status": "Activo",
+      "sourceStatus": "Verificado en el directorio institucional",
+      "sourceUpdatedAt": "2026-07-31",
+      "photoUrl": "",
+      "tags": [
+        "control interno",
+        "auditoría",
+        "seguimiento"
+      ]
+    },
+    {
+      "id": "yeini-coromoto-fuentes-castano",
+      "name": "Yeini Coromoto Fuentes Castaño",
+      "position": "Secretaria de Salud",
+      "department": "Secretaría de Salud",
+      "email": "salud@sanpedro-valle.gov.co",
+      "phone": "(032) 223 8356 Ext. 25",
+      "profileUrl": "https://www.sanpedro-valle.gov.co/directorio-de-funcionarios/alba-nohemy-dorado-pantoja",
+      "sigepUrl": "https://www.funcionpublica.gov.co/sigep2/directorio",
+      "cvUrl": "https://www.sanpedro-valle.gov.co/directorio-de-funcionarios/alba-nohemy-dorado-pantoja",
+      "status": "Activo",
+      "sourceStatus": "Verificado en el directorio institucional",
+      "sourceUpdatedAt": "2026-07-31",
+      "photoUrl": "",
+      "tags": [
+        "salud",
+        "secretaría",
+        "salud pública"
+      ]
+    }
+  ],
+  "considerationProcesses": [
+    {
+      "id": "historico-jefe-control-interno",
+      "title": "Listado de candidatos al puesto de Jefe de Control Interno",
+      "position": "Jefe de Control Interno",
+      "status": "Histórico",
+      "startDate": "",
+      "endDate": "",
+      "responsible": "Alcaldía Municipal / Talento Humano",
+      "summary": "Archivo histórico del proceso publicado por la Alcaldía. Los procesos nuevos se incorporan automáticamente cuando la fuente institucional los publica.",
+      "documentUrl": "https://sanpedro-valle.gov.co/noticias/listado-de-candidatos-al-puesto-de-jefe-de-control-interno",
+      "commentsEnabled": false
+    }
+  ]
+}

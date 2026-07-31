@@ -22,7 +22,7 @@ Fecha de corte: 31 de julio de 2026
 3. PÁGINAS INDEPENDIENTES
 - decisiones-impacto.html: 6 registros.
 - supervision-vigilancia.html: 6 registros y directorio de organismos de control.
-- hojas-de-vida.html: 3 registros, sección activa e histórica.
+- hojas-de-vida.html: módulo Talento Público Abierto, directorio automático, perfiles individuales, procesos de consideración, participación y seguimiento.
 - gaceta-oficial.html: 6 registros buscables.
 - agenda-regulatoria-2026.html: 5 iniciativas e historial de cambios.
 - participacion-normativa-sucop.html: 11 publicaciones relacionadas, estado de habilitación y canal local.

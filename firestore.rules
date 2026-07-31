@@ -1,80 +1,659 @@
 rules_version = '2';
+
 service cloud.firestore {
   match /databases/{database}/documents {
+
     function signedIn() {
       return request.auth != null;
     }
 
-    function isAdmin() {
+    function hasEmail() {
       return signedIn()
-        && exists(/databases/$(database)/documents/gobierno_abierto_admins/$(request.auth.uid))
-        && get(/databases/$(database)/documents/gobierno_abierto_admins/$(request.auth.uid)).data.active == true;
+        && request.auth.token.email is string
+        && request.auth.token.email.size() > 0;
     }
 
-    function validObservation() {
+    function uidProfilePath() {
+      return /databases/$(database)/documents/users/$(request.auth.uid);
+    }
+
+    function legacyProfilePath() {
+      return /databases/$(database)/documents/users/$(request.auth.token.email);
+    }
+
+    function uidProfileExists() {
+      return signedIn() && exists(uidProfilePath());
+    }
+
+    function legacyProfileExists() {
+      return hasEmail() && exists(legacyProfilePath());
+    }
+
+    function roleOf(data) {
+      return data.get(
+        'role',
+        data.get(
+          'rol',
+          data.get('tipoUsuario', data.get('userRole', 'guest'))
+        )
+      );
+    }
+
+    function active(data) {
+      return data.get('active', true) == true;
+    }
+
+    function tokenRole() {
+      return !signedIn()
+        ? 'guest'
+        : request.auth.token.get(
+            'role',
+            request.auth.token.get(
+              'userRole',
+              request.auth.token.get('super_admin', false) == true
+                ? 'super_admin'
+                : (
+                    request.auth.token.get('admin', false) == true
+                      ? 'admin'
+                      : 'guest'
+                  )
+            )
+          );
+    }
+
+    function guestRole(role) {
+      return role in [
+        'guest', 'invitado', 'visitante', 'viewer',
+        'usuario', 'registered', 'registrado'
+      ];
+    }
+
+    function editorRole(role) {
+      return role in [
+        'editor', 'admin', 'administrador', 'super_admin', 'superadmin',
+        'super_administrador', 'superadministrador',
+        'administrador_principal'
+      ];
+    }
+
+    function adminRole(role) {
+      return role in [
+        'admin', 'administrador', 'super_admin', 'superadmin',
+        'super_administrador', 'superadministrador',
+        'administrador_principal'
+      ];
+    }
+
+    function superRole(role) {
+      return role in [
+        'super_admin', 'superadmin', 'super_administrador',
+        'superadministrador', 'administrador_principal'
+      ];
+    }
+
+    function tokenIsEditor() {
+      return signedIn() && editorRole(tokenRole());
+    }
+
+    function tokenIsAdmin() {
+      return signedIn() && adminRole(tokenRole());
+    }
+
+    function tokenIsSuperAdmin() {
+      return signedIn() && superRole(tokenRole());
+    }
+
+    function uidIsEditor() {
+      return uidProfileExists()
+        && active(get(uidProfilePath()).data)
+        && editorRole(roleOf(get(uidProfilePath()).data));
+    }
+
+    function uidIsAdmin() {
+      return uidProfileExists()
+        && active(get(uidProfilePath()).data)
+        && adminRole(roleOf(get(uidProfilePath()).data));
+    }
+
+    function uidIsSuperAdmin() {
+      return uidProfileExists()
+        && active(get(uidProfilePath()).data)
+        && superRole(roleOf(get(uidProfilePath()).data));
+    }
+
+    function legacyIsEditor() {
+      return legacyProfileExists()
+        && active(get(legacyProfilePath()).data)
+        && editorRole(roleOf(get(legacyProfilePath()).data));
+    }
+
+    function legacyIsAdmin() {
+      return legacyProfileExists()
+        && active(get(legacyProfilePath()).data)
+        && adminRole(roleOf(get(legacyProfilePath()).data));
+    }
+
+    function legacyIsSuperAdmin() {
+      return legacyProfileExists()
+        && active(get(legacyProfilePath()).data)
+        && superRole(roleOf(get(legacyProfilePath()).data));
+    }
+
+    function isEditor() {
+      return tokenIsEditor() || uidIsEditor() || legacyIsEditor();
+    }
+
+    function isAdmin() {
+      return tokenIsAdmin() || uidIsAdmin() || legacyIsAdmin();
+    }
+
+    function isSuperAdmin() {
+      return tokenIsSuperAdmin() || uidIsSuperAdmin() || legacyIsSuperAdmin();
+    }
+
+    function ownsProfile(userId) {
+      return signedIn()
+        && (
+          userId == request.auth.uid
+          || (hasEmail() && userId == request.auth.token.email)
+        );
+    }
+
+    // Autorización aislada para la micropágina Gobierno Abierto.
+    // No concede acceso a otros módulos del portal.
+    function gaAdminPath() {
+      return /databases/$(database)/documents/gobierno_abierto_admins/$(request.auth.uid);
+    }
+
+    function gaAdminExists() {
+      return signedIn() && exists(gaAdminPath());
+    }
+
+    function gaIsEditor() {
+      return isEditor()
+        || (
+          gaAdminExists()
+          && active(get(gaAdminPath()).data)
+          && editorRole(roleOf(get(gaAdminPath()).data))
+        );
+    }
+
+    function gaIsAdmin() {
+      return isAdmin()
+        || (
+          gaAdminExists()
+          && active(get(gaAdminPath()).data)
+          && adminRole(roleOf(get(gaAdminPath()).data))
+        );
+    }
+
+    function gaIsSuperAdmin() {
+      return isSuperAdmin()
+        || (
+          gaAdminExists()
+          && active(get(gaAdminPath()).data)
+          && superRole(roleOf(get(gaAdminPath()).data))
+        );
+    }
+
+    function validGuestCreate(userId) {
+      return signedIn()
+        && userId == request.auth.uid
+        && request.resource.data.get('uid', '') == request.auth.uid
+        && request.resource.data.get('email', '') is string
+        && request.resource.data.get('role', '') == 'guest'
+        && request.resource.data.get('active', false) == true;
+    }
+
+    function canonicalRoleMatches(sourceData, targetData) {
+      let sourceRole = roleOf(sourceData);
+      let targetRole = targetData.get('role', 'guest');
+
+      return (
+        superRole(sourceRole) && targetRole == 'super_admin'
+      ) || (
+        sourceRole in ['admin', 'administrador'] && targetRole == 'admin'
+      ) || (
+        sourceRole == 'editor' && targetRole == 'editor'
+      ) || (
+        guestRole(sourceRole) && targetRole == 'guest'
+      );
+    }
+
+    function validLegacyMigration(userId) {
+      return signedIn()
+        && userId == request.auth.uid
+        && legacyProfileExists()
+        && request.resource.data.get('uid', '') == request.auth.uid
+        && request.resource.data.get('email', '') == request.auth.token.email
+        && canonicalRoleMatches(
+          get(legacyProfilePath()).data,
+          request.resource.data
+        )
+        && request.resource.data.get('active', true)
+          == get(legacyProfilePath()).data.get('active', true);
+    }
+
+    function validOwnUpdate(userId) {
+      return userId == request.auth.uid
+        && request.resource.data.get('uid', '') == resource.data.get('uid', '')
+        && roleOf(request.resource.data) == roleOf(resource.data)
+        && request.resource.data.get('active', true)
+          == resource.data.get('active', true)
+        && request.resource.data.get('email', '')
+          == resource.data.get('email', '')
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly([
+          'displayName', 'phone', 'neighborhood', 'emailVerified',
+          'lastLoginAt', 'updatedAt'
+        ]);
+    }
+
+    function validPublicIdea() {
       return request.resource.data.keys().hasAll([
-          'ticket', 'publicationId', 'publicationTitle', 'citizenName',
-          'citizenEmail', 'type', 'text', 'consent', 'status', 'createdAtIso'
+          'title', 'author', 'location', 'category', 'description',
+          'status', 'response', 'votes', 'created'
         ])
         && request.resource.data.keys().hasOnly([
-          'ticket', 'publicationId', 'publicationTitle', 'citizenName',
-          'citizenEmail', 'type', 'articleReference', 'text', 'consent',
-          'status', 'source', 'createdAt', 'createdAtIso', 'userAgent'
+          'title', 'author', 'location', 'category', 'description',
+          'status', 'response', 'votes', 'created', 'createdBy',
+          'createdByEmail', 'createdAt', 'updatedAt'
         ])
-        && request.resource.data.ticket is string
-        && request.resource.data.ticket.matches('^SP-NOR-[0-9]{4}-[A-Z0-9]{6}$')
-        && request.resource.data.publicationId is string
-        && request.resource.data.publicationId.size() >= 3
-        && request.resource.data.publicationId.size() <= 120
-        && request.resource.data.publicationTitle is string
-        && request.resource.data.publicationTitle.size() <= 260
-        && request.resource.data.citizenName is string
-        && request.resource.data.citizenName.size() >= 2
-        && request.resource.data.citizenName.size() <= 120
-        && request.resource.data.citizenEmail is string
-        && request.resource.data.citizenEmail.size() >= 5
-        && request.resource.data.citizenEmail.size() <= 180
-        && request.resource.data.type is string
-        && request.resource.data.type.size() <= 80
-        && request.resource.data.text is string
-        && request.resource.data.text.size() >= 10
-        && request.resource.data.text.size() <= 5000
-        && request.resource.data.consent == true
-        && request.resource.data.status == 'Radicada';
+        && request.resource.data.title is string
+        && request.resource.data.title.size() > 0
+        && request.resource.data.title.size() <= 120
+        && request.resource.data.author is string
+        && request.resource.data.author.size() <= 120
+        && request.resource.data.location is string
+        && request.resource.data.location.size() <= 120
+        && request.resource.data.category is string
+        && request.resource.data.category.size() <= 80
+        && request.resource.data.description is string
+        && request.resource.data.description.size() > 0
+        && request.resource.data.description.size() <= 1200
+        && request.resource.data.response == ''
+        && request.resource.data.status == 'recibida'
+        && request.resource.data.votes == 0;
     }
 
+    function validSubscriptionCreate() {
+      return request.resource.data.keys().hasOnly([
+          'email', 'emailHash', 'unsubscribeToken', 'consent', 'status',
+          'preferences', 'channels', 'source', 'publicationIds', 'userId',
+          'createdAt', 'updatedAt', 'lastSentAt', 'lastPublicationId',
+          'deliveryCount'
+        ])
+        && request.resource.data.email is string
+        && request.resource.data.email.size() >= 5
+        && request.resource.data.email.size() <= 254
+        && request.resource.data.emailHash is string
+        && request.resource.data.emailHash.size() >= 32
+        && request.resource.data.unsubscribeToken is string
+        && request.resource.data.unsubscribeToken.size() >= 8
+        && request.resource.data.consent == true
+        && request.resource.data.status == 'active'
+        && request.resource.data.preferences is list
+        && request.resource.data.channels is map
+        && request.resource.data.deliveryCount == 0;
+    }
+
+    function validParticipationFormCreate() {
+      let d = request.resource.data;
+
+      return d.keys().hasAll([
+          'codigo', 'tipoFormulario', 'vigencia', 'nombres', 'apellidos',
+          'correo', 'telefono', 'tipoParticipante', 'organizacion',
+          'territorio', 'zona', 'actividad', 'temasInteres', 'modalidad',
+          'accesibilidad', 'propuesta', 'autorizacionDatos',
+          'autorizacionContacto', 'estado', 'origen', 'createdAt', 'updatedAt'
+        ])
+        && d.keys().hasOnly([
+          'codigo', 'tipoFormulario', 'vigencia', 'nombres', 'apellidos',
+          'correo', 'telefono', 'tipoParticipante', 'organizacion',
+          'territorio', 'zona', 'actividad', 'temasInteres', 'modalidad',
+          'accesibilidad', 'propuesta', 'autorizacionDatos',
+          'autorizacionContacto', 'estado', 'origen', 'createdAt', 'updatedAt'
+        ])
+        && d.codigo is string
+        && d.codigo.matches('^PC-2026-[A-Z0-9]{8}$')
+        && d.tipoFormulario == 'inscripcion_participacion_2026'
+        && d.vigencia == 2026
+        && d.nombres is string && d.nombres.size() >= 2 && d.nombres.size() <= 80
+        && d.apellidos is string && d.apellidos.size() >= 2 && d.apellidos.size() <= 80
+        && d.correo is string && d.correo.size() >= 5 && d.correo.size() <= 120
+        && d.telefono is string && d.telefono.size() <= 25
+        && d.tipoParticipante is string
+        && d.tipoParticipante.size() >= 2
+        && d.tipoParticipante.size() <= 80
+        && d.organizacion is string && d.organizacion.size() <= 120
+        && d.territorio is string
+        && d.territorio.size() >= 2
+        && d.territorio.size() <= 120
+        && d.zona in ['Urbana', 'Rural', 'Fuera del municipio']
+        && d.actividad is string
+        && d.actividad.size() >= 2
+        && d.actividad.size() <= 120
+        && d.temasInteres is list
+        && d.temasInteres.size() >= 1
+        && d.temasInteres.size() <= 8
+        && d.modalidad in ['Presencial', 'Virtual', 'Mixta', 'Sin preferencia']
+        && d.accesibilidad is string && d.accesibilidad.size() <= 250
+        && d.propuesta is string && d.propuesta.size() <= 1200
+        && d.autorizacionDatos == true
+        && d.autorizacionContacto is bool
+        && d.estado == 'recibida'
+        && d.origen == 'github_pages'
+        && d.createdAt == request.time
+        && d.updatedAt == request.time;
+    }
+
+    function validPublicContributionCreate() {
+      let d = request.resource.data;
+
+      return d.keys().hasAll([
+          'codigo', 'vigencia', 'nombre', 'tipo', 'comentario',
+          'consentimientoPublicacion', 'estadoPublicacion',
+          'respuestaInstitucional', 'origen', 'createdAt', 'updatedAt'
+        ])
+        && d.keys().hasOnly([
+          'codigo', 'vigencia', 'nombre', 'tipo', 'comentario',
+          'consentimientoPublicacion', 'estadoPublicacion',
+          'respuestaInstitucional', 'origen', 'createdAt', 'updatedAt'
+        ])
+        && d.codigo is string
+        && d.codigo.matches('^AP-2026-[A-Z0-9]{8}$')
+        && d.vigencia == 2026
+        && d.nombre is string && d.nombre.size() >= 2 && d.nombre.size() <= 80
+        && d.tipo in ['Idea', 'Pregunta', 'Comentario']
+        && d.comentario is string
+        && d.comentario.size() >= 3
+        && d.comentario.size() <= 1200
+        && d.consentimientoPublicacion == true
+        && d.estadoPublicacion == 'publicado'
+        && d.respuestaInstitucional == ''
+        && d.origen in ['tablero_publico', 'formulario_inscripcion']
+        && d.createdAt == request.time
+        && d.updatedAt == request.time;
+    }
+
+    function validEvaluationCreate() {
+      let d = request.resource.data;
+
+      return d.keys().hasAll([
+          'codigo', 'tipoFormulario', 'vigencia', 'actividad',
+          'fechaActividad', 'mecanismo', 'territorio', 'tipoParticipante',
+          'modalidad', 'informacionPrevia', 'facilidadAcceso',
+          'claridadMetodologia', 'oportunidadParticipar', 'calidadRespuesta',
+          'satisfaccionGeneral', 'recomendaria', 'aspectosPositivos',
+          'aspectosMejorar', 'compromisoSeguimiento',
+          'autorizacionTratamiento', 'estado', 'origen', 'createdAt', 'updatedAt'
+        ])
+        && d.keys().hasOnly([
+          'codigo', 'tipoFormulario', 'vigencia', 'actividad',
+          'fechaActividad', 'mecanismo', 'territorio', 'tipoParticipante',
+          'modalidad', 'informacionPrevia', 'facilidadAcceso',
+          'claridadMetodologia', 'oportunidadParticipar', 'calidadRespuesta',
+          'satisfaccionGeneral', 'recomendaria', 'aspectosPositivos',
+          'aspectosMejorar', 'compromisoSeguimiento',
+          'autorizacionTratamiento', 'estado', 'origen', 'createdAt', 'updatedAt'
+        ])
+        && d.codigo is string
+        && d.codigo.matches('^EV-2026-[A-Z0-9]{8}$')
+        && d.tipoFormulario == 'evaluacion_participacion_2026'
+        && d.vigencia == 2026
+        && d.actividad is string
+        && d.actividad.size() >= 2
+        && d.actividad.size() <= 160
+        && d.fechaActividad is string
+        && d.fechaActividad.matches('^2026-[0-9]{2}-[0-9]{2}$')
+        && d.mecanismo in [
+          'Rendición de cuentas', 'Audiencia pública',
+          'Mesa de participación', 'Encuesta o consulta',
+          'Taller o encuentro', 'Otro'
+        ]
+        && d.territorio is string
+        && d.territorio.size() >= 2
+        && d.territorio.size() <= 120
+        && d.tipoParticipante in [
+          'Ciudadanía general', 'Organización social o comunitaria',
+          'Veeduría o control social', 'Servidor público o contratista', 'Otro'
+        ]
+        && d.modalidad in ['Presencial', 'Virtual', 'Mixta']
+        && d.informacionPrevia is int && d.informacionPrevia >= 1 && d.informacionPrevia <= 5
+        && d.facilidadAcceso is int && d.facilidadAcceso >= 1 && d.facilidadAcceso <= 5
+        && d.claridadMetodologia is int && d.claridadMetodologia >= 1 && d.claridadMetodologia <= 5
+        && d.oportunidadParticipar is int && d.oportunidadParticipar >= 1 && d.oportunidadParticipar <= 5
+        && d.calidadRespuesta is int && d.calidadRespuesta >= 1 && d.calidadRespuesta <= 5
+        && d.satisfaccionGeneral is int && d.satisfaccionGeneral >= 1 && d.satisfaccionGeneral <= 5
+        && d.recomendaria is bool
+        && d.aspectosPositivos is string && d.aspectosPositivos.size() <= 1000
+        && d.aspectosMejorar is string && d.aspectosMejorar.size() <= 1000
+        && d.compromisoSeguimiento is string && d.compromisoSeguimiento.size() <= 800
+        && d.autorizacionTratamiento == true
+        && d.estado == 'recibida'
+        && d.origen == 'github_pages'
+        && d.createdAt == request.time
+        && d.updatedAt == request.time;
+    }
+
+    function validPublicSubscriptionUpdate() {
+      return request.resource.data.emailHash == resource.data.emailHash
+        && request.resource.data.email == resource.data.email
+        && request.resource.data.unsubscribeToken == resource.data.unsubscribeToken
+        && request.resource.data.status in ['active', 'paused', 'cancelled']
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly([
+          'status', 'preferences', 'channels', 'updatedAt', 'cancelledAt',
+          'unsubscribeToken', 'email', 'emailHash'
+        ]);
+    }
+
+    // Validaciones de la micropágina Gobierno Abierto.
+    function validGaObservationCreate() {
+      let d = request.resource.data;
+
+      return d.keys().hasAll([
+          'ticket', 'publicationId', 'publicationTitle', 'citizenName',
+          'citizenEmail', 'type', 'text', 'consent', 'status',
+          'source', 'createdAt', 'createdAtIso', 'userAgent'
+        ])
+        && d.keys().hasOnly([
+          'ticket', 'publicationId', 'publicationTitle', 'citizenName',
+          'citizenEmail', 'type', 'articleReference', 'text', 'consent',
+          'status', 'source', 'createdAt', 'createdAtIso', 'userAgent',
+          'respondedAt', 'respondedBy'
+        ])
+        && d.ticket is string
+        && d.ticket.matches('^SP-NOR-[0-9]{4}-[A-Z0-9]{6}$')
+        && d.publicationId is string
+        && d.publicationId.size() >= 3
+        && d.publicationId.size() <= 120
+        && d.publicationTitle is string
+        && d.publicationTitle.size() >= 3
+        && d.publicationTitle.size() <= 260
+        && d.citizenName is string
+        && d.citizenName.size() >= 2
+        && d.citizenName.size() <= 120
+        && d.citizenEmail is string
+        && d.citizenEmail.size() >= 5
+        && d.citizenEmail.size() <= 180
+        && d.type is string
+        && d.type.size() >= 2
+        && d.type.size() <= 80
+        && d.get('articleReference', '') is string
+        && d.get('articleReference', '').size() <= 160
+        && d.text is string
+        && d.text.size() >= 10
+        && d.text.size() <= 5000
+        && d.consent == true
+        && d.status == 'Radicada'
+        && d.source == 'Micropágina Gobierno Abierto y Normativa'
+        && d.createdAt == request.time
+        && d.createdAtIso is string
+        && d.createdAtIso.size() >= 20
+        && d.createdAtIso.size() <= 40
+        && d.userAgent is string
+        && d.userAgent.size() <= 240;
+    }
+
+    function validGaAuditCreate() {
+      let d = request.resource.data;
+
+      return signedIn()
+        && d.keys().hasAll([
+          'action', 'targetId', 'targetTitle', 'userUid',
+          'userEmail', 'createdAt', 'createdAtIso'
+        ])
+        && d.keys().hasOnly([
+          'action', 'targetId', 'targetTitle', 'userUid',
+          'userEmail', 'createdAt', 'createdAtIso'
+        ])
+        && d.action is string
+        && d.action.size() >= 3
+        && d.action.size() <= 160
+        && d.targetId is string
+        && d.targetId.size() <= 160
+        && d.targetTitle is string
+        && d.targetTitle.size() <= 300
+        && d.userUid == request.auth.uid
+        && d.userEmail is string
+        && d.userEmail.size() <= 180
+        && d.createdAt == request.time
+        && d.createdAtIso is string
+        && d.createdAtIso.size() >= 20
+        && d.createdAtIso.size() <= 40;
+    }
+
+    // Contenido del portal principal.
+    match /portal/{documentId} {
+      allow read: if documentId in ['main', 'meta'];
+      allow create, update, delete: if isEditor();
+    }
+
+    match /portalState/{sectionId} {
+      allow read, create, update, delete: if isEditor();
+    }
+
+    match /portalPublicState/{sectionId} {
+      allow read: if true;
+      allow create, update, delete: if isEditor();
+    }
+
+    match /portalEdits/{documentId} {
+      allow read, create, update, delete: if isEditor();
+    }
+
+    match /ideas/{ideaId} {
+      allow read: if true;
+      allow create: if validPublicIdea() || isEditor();
+      allow update, delete: if isEditor();
+    }
+
+    match /users/{userId} {
+      allow get: if ownsProfile(userId) || isSuperAdmin();
+      allow list: if isSuperAdmin();
+      allow create: if isSuperAdmin()
+        || validGuestCreate(userId)
+        || validLegacyMigration(userId);
+      allow update: if isSuperAdmin()
+        || validOwnUpdate(userId)
+        || validLegacyMigration(userId);
+      allow delete: if isSuperAdmin();
+    }
+
+    match /subscriptions/{subscriptionId} {
+      allow create: if isEditor() || validSubscriptionCreate();
+      allow get, list: if isSuperAdmin();
+      allow update: if isSuperAdmin() || validPublicSubscriptionUpdate();
+      allow delete: if isSuperAdmin();
+    }
+
+    match /participacionFormularios/{registroId} {
+      allow create: if validParticipationFormCreate();
+      allow read, update, delete: if isSuperAdmin();
+    }
+
+    match /participacionAportesPublicos/{aporteId} {
+      allow create: if validPublicContributionCreate();
+      allow get: if isSuperAdmin()
+        || resource.data.estadoPublicacion == 'publicado';
+      allow list: if isSuperAdmin()
+        || (
+          request.query.limit != null
+          && request.query.limit <= 200
+          && resource.data.estadoPublicacion == 'publicado'
+        );
+      allow update, delete: if isSuperAdmin();
+    }
+
+    match /evaluacionesParticipacion/{registroId} {
+      allow create: if validEvaluationCreate();
+      allow read, update, delete: if isSuperAdmin();
+    }
+
+    match /participacionDecisiones/{decisionId} {
+      allow get: if isSuperAdmin()
+        || resource.data.estadoPublicacion == 'publicado';
+      allow list: if isSuperAdmin()
+        || (
+          request.query.limit != null
+          && request.query.limit <= 200
+          && resource.data.estadoPublicacion == 'publicado'
+        );
+      allow create, update, delete: if isSuperAdmin();
+    }
+
+    match /portalSettings/{settingId} {
+      allow read: if isEditor();
+      allow create, update: if isAdmin();
+      allow delete: if isSuperAdmin();
+    }
+
+    match /auditLogs/{logId} {
+      allow create: if isEditor();
+      allow read: if isSuperAdmin();
+      allow update, delete: if false;
+    }
+
+    // Micropágina Gobierno Abierto, Normativa y Participación.
     match /gobierno_abierto_publicaciones/{publicationId} {
-      allow get, list: if resource.data.published == true || isAdmin();
-      allow create, update, delete: if isAdmin();
+      allow get: if resource.data.published == true || gaIsEditor();
+      allow list: if resource.data.published == true || gaIsEditor();
+      allow create, update, delete: if gaIsEditor();
     }
 
     match /gobierno_abierto_observaciones/{observationId} {
-      allow create: if validObservation();
-      allow read, update, delete: if isAdmin();
+      allow create: if validGaObservationCreate();
+      allow read, update, delete: if gaIsAdmin();
     }
 
     match /gobierno_abierto_respuestas_publicas/{responseId} {
-      allow get, list: if resource.data.published == true || isAdmin();
-      allow create, update, delete: if isAdmin();
+      allow get: if resource.data.published == true || gaIsAdmin();
+      allow list: if resource.data.published == true || gaIsAdmin();
+      allow create, update, delete: if gaIsAdmin();
     }
 
     match /gobierno_abierto_config/{configId} {
       allow get, list: if true;
-      allow create, update, delete: if isAdmin();
+      allow create, update: if gaIsAdmin();
+      allow delete: if gaIsSuperAdmin();
     }
 
     match /gobierno_abierto_admins/{uid} {
-      allow read: if signedIn() && (request.auth.uid == uid || isAdmin());
-      allow write: if false;
+      allow get: if signedIn()
+        && (request.auth.uid == uid || gaIsAdmin());
+      allow list: if gaIsSuperAdmin();
+      allow create, update, delete: if gaIsSuperAdmin();
     }
 
     match /gobierno_abierto_auditoria/{entryId} {
-      allow read, create: if isAdmin();
+      allow create: if gaIsAdmin() && validGaAuditCreate();
+      allow read: if gaIsAdmin();
       allow update, delete: if false;
     }
 
+    // Garantía global: el superadministrador institucional conserva
+    // acceso a colecciones presentes y futuras.
     match /{document=**} {
-      allow read, write: if false;
+      allow read, write: if isSuperAdmin();
     }
   }
 }

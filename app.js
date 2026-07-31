@@ -532,7 +532,12 @@ async function searchTracking() {
     let response = null;
     if (state.firebase?.db) {
       const { collection, getDocs, limit, query, where } = state.firebase.firestore;
-      const snapshot = await getDocs(query(collection(state.firebase.db, COLLECTIONS.publicResponses), where("ticket", "==", code), limit(1)));
+      const snapshot = await getDocs(query(
+        collection(state.firebase.db, COLLECTIONS.publicResponses),
+        where("ticket", "==", code),
+        where("published", "==", true),
+        limit(1)
+      ));
       response = snapshot.empty ? null : { id: snapshot.docs[0].id, ...snapshot.docs[0].data() };
     } else {
       const locals = JSON.parse(storage.get("ga-public-responses") || "[]");
@@ -616,6 +621,78 @@ async function adminLogin() {
   }
 }
 
+const ADMIN_ROLES = new Set([
+  "admin",
+  "administrador",
+  "super_admin",
+  "superadmin",
+  "super_administrador",
+  "superadministrador",
+  "administrador_principal"
+]);
+
+function roleFromProfile(data = {}) {
+  return String(data.role || data.rol || data.tipoUsuario || data.userRole || "guest")
+    .trim()
+    .toLowerCase();
+}
+
+function activeAdminProfile(data = {}) {
+  return data.active !== false && ADMIN_ROLES.has(roleFromProfile(data));
+}
+
+async function resolveAdminProfile(user) {
+  const { doc, getDoc } = state.firebase.firestore;
+  const candidates = [
+    { collection: COLLECTIONS.admins, id: user.uid, source: "gobierno_abierto_admins" },
+    { collection: "users", id: user.uid, source: "users_uid" }
+  ];
+
+  if (user.email) {
+    candidates.push({ collection: "users", id: user.email, source: "users_email" });
+  }
+
+  for (const candidate of candidates) {
+    try {
+      const snap = await getDoc(doc(state.firebase.db, candidate.collection, candidate.id));
+      if (snap.exists() && activeAdminProfile(snap.data())) {
+        return {
+          uid: user.uid,
+          source: candidate.source,
+          ...snap.data(),
+          role: roleFromProfile(snap.data())
+        };
+      }
+    } catch (error) {
+      console.warn(`No fue posible consultar ${candidate.source}.`, error);
+    }
+  }
+
+  try {
+    const token = await user.getIdTokenResult();
+    const claims = token.claims || {};
+    const claimRole = claims.role
+      || claims.userRole
+      || (claims.super_admin === true ? "super_admin" : "")
+      || (claims.admin === true ? "admin" : "");
+    const role = String(claimRole || "guest").toLowerCase();
+    if (ADMIN_ROLES.has(role)) {
+      return {
+        uid: user.uid,
+        email: user.email || "",
+        name: user.displayName || "Administrador",
+        active: true,
+        role,
+        source: "custom_claims"
+      };
+    }
+  } catch (error) {
+    console.warn("No fue posible consultar los custom claims.", error);
+  }
+
+  return null;
+}
+
 async function handleAuthState(user) {
   state.user = user;
   state.admin = null;
@@ -624,14 +701,13 @@ async function handleAuthState(user) {
     return;
   }
   try {
-    const { doc, getDoc } = state.firebase.firestore;
-    const snap = await getDoc(doc(state.firebase.db, COLLECTIONS.admins, user.uid));
-    if (!snap.exists() || snap.data().active === false) {
-      showMessage($("#adminLoginMessage"), "Su cuenta se autenticó, pero no está autorizada como administradora de esta micropágina.", "error");
+    const profile = await resolveAdminProfile(user);
+    if (!profile) {
+      showMessage($("#adminLoginMessage"), "Su cuenta se autenticó, pero no tiene un rol administrativo activo para esta micropágina.", "error");
       await state.firebase.authApi.signOut(state.firebase.auth);
       return;
     }
-    state.admin = { uid: user.uid, ...snap.data() };
+    state.admin = profile;
     toggleAdminPanel(true);
     renderAdminView();
   } catch (error) {

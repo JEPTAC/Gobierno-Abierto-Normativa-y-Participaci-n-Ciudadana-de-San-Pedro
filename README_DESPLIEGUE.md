@@ -34,7 +34,9 @@ El archivo `firebase-config.js` ya apunta al proyecto `rendicion-de-cuentas-6ace
    - `USUARIO.github.io`
    - el dominio municipal, si después se incrusta o publica allí.
 
-### Reglas de Firestore
+### Reglas de Firestore combinadas
+
+El archivo `firestore.rules` ya integra las reglas generales del portal, los formularios de participación, el tablero ciudadano, las evaluaciones, el laboratorio de ideas y las seis colecciones de Gobierno Abierto. Debe reemplazarse el conjunto completo de reglas del proyecto; no se debe pegar como un segundo bloque independiente.
 
 Desde una terminal con Firebase CLI:
 
@@ -47,12 +49,18 @@ firebase deploy --only firestore:rules,firestore:indexes
 
 También puede copiar el contenido de `firestore.rules` en Firebase Console → Firestore Database → Rules.
 
-### Crear el primer administrador
+### Autorización administrativa
 
-1. Inicie sesión una vez con Google desde la micropágina para conocer el UID en Authentication → Users.
-2. En Firestore cree la colección `gobierno_abierto_admins`.
-3. Cree un documento cuyo ID sea exactamente el UID del usuario.
-4. Agregue estos campos:
+La micropágina reconoce, en este orden, cualquiera de las siguientes fuentes de autorización:
+
+1. Documento `gobierno_abierto_admins/{UID}`.
+2. Perfil institucional `users/{UID}`.
+3. Perfil legado `users/{correo}`.
+4. Custom claims `role`, `userRole`, `admin` o `super_admin`.
+
+Los roles admitidos para abrir el panel completo son `admin`, `administrador`, `super_admin`, `superadmin`, `super_administrador`, `superadministrador` y `administrador_principal`, siempre que el perfil no tenga `active: false`.
+
+Cuando se prefiera aislar el acceso únicamente para esta micropágina, cree `gobierno_abierto_admins/{UID}` con:
 
 ```json
 {
@@ -63,7 +71,7 @@ También puede copiar el contenido de `firestore.rules` en Firebase Console → 
 }
 ```
 
-La aplicación no permite crear administradores desde el navegador. Esta restricción evita la autoasignación de privilegios.
+La creación y modificación de administradores queda reservada al superadministrador. No existe autoasignación de privilegios desde el navegador.
 
 ## 3. Cargar los registros iniciales
 
@@ -132,3 +140,29 @@ No publique cédulas completas, direcciones residenciales, teléfonos personales
 - Responder observaciones dentro del procedimiento aplicable.
 - Revisar accesibilidad, contraste, teclado y reflujo después de cambios de diseño.
 - Exportar periódicamente una copia de Firestore.
+
+---
+
+## Directorio automático de funcionarios y hojas de vida
+
+La página `hojas-de-vida.html` fue reemplazada por el módulo **Talento Público Abierto**. Incluye:
+
+- Directorio individual de funcionarios y servidores.
+- Enlaces al perfil institucional, hoja de vida pública y SIGEP II.
+- Filtros por nombre, cargo, dependencia y estado.
+- Procesos activos e históricos sometidos a consideración ciudadana.
+- Formulario individual de observaciones con código de seguimiento.
+- Integración con el panel administrativo de observaciones existente.
+- Actualización diaria desde la sede electrónica mediante GitHub Actions.
+
+### Activar la sincronización
+
+1. Suba todos los archivos del paquete al repositorio.
+2. Abra **Actions** en GitHub.
+3. Seleccione **Sincronizar directorio de funcionarios**.
+4. Pulse **Run workflow** para ejecutar la primera actualización.
+5. El flujo se repetirá diariamente a las 5:30 a. m. hora de Colombia.
+
+El resultado queda en `data/funcionarios.json`. El informe técnico de cada revisión queda en `docs/ultimo-reporte-sincronizacion.json`.
+
+No es necesario crear una nueva colección de Firestore: las observaciones utilizan `gobierno_abierto_observaciones` y las respuestas públicas `gobierno_abierto_respuestas_publicas`, ambas ya protegidas por las reglas integradas.

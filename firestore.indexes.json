@@ -8,6 +8,14 @@
         { "fieldPath": "category", "order": "ASCENDING" },
         { "fieldPath": "order", "order": "ASCENDING" }
       ]
+    },
+    {
+      "collectionGroup": "gobierno_abierto_respuestas_publicas",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "ticket", "order": "ASCENDING" },
+        { "fieldPath": "published", "order": "ASCENDING" }
+      ]
     }
   ],
   "fieldOverrides": []

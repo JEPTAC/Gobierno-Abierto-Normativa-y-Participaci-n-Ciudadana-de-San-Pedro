@@ -1,0 +1,12 @@
+{
+  "name": "san-pedro-gobierno-abierto",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "sync:funcionarios": "node scripts/sync-funcionarios.mjs",
+    "check": "node --check app.js && node --check section.js && node --check hojas-de-vida.js && node --check scripts/sync-funcionarios.mjs"
+  },
+  "dependencies": {
+    "cheerio": "1.0.0"
+  }
+}

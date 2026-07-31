@@ -76,3 +76,15 @@
 - [ ] La descripción de evidencia identifica contenido, fecha y dependencia.
 - [ ] La evidencia SUCOP solo se marca como cumplida cuando exista el enlace directo real.
 - [ ] Se conservaron capturas y una copia exportada de la fecha de verificación.
+
+## Talento Público Abierto
+
+- [x] Fuente permanente y directa para el directorio de funcionarios.
+- [x] Enlaces a perfiles institucionales y consulta SIGEP II.
+- [x] Sección independiente para hojas de vida en consideración ciudadana.
+- [x] Periodos de observaciones visibles cuando existan procesos activos.
+- [x] Canal ciudadano individual por funcionario o proceso.
+- [x] Código de seguimiento y respuesta pública anonimizada.
+- [x] Sincronización diaria mediante GitHub Actions.
+- [x] Conservación de la última versión válida si la fuente no responde.
+- [x] Protección de datos mediante enlaces a versiones públicas de origen.
