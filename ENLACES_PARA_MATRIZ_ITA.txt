@@ -1,0 +1,28 @@
+REEMPLACE [URL-BASE] por la URL de GitHub Pages, terminada en /.
+
+1. Decisiones, actos y proyectos con impacto ciudadano
+[URL-BASE]decisiones-impacto.html
+
+2. Mecanismos internos, responsables, canales y procedimientos de supervisión
+[URL-BASE]supervision-vigilancia.html
+
+3. Hojas de vida sometidas a consideración ciudadana y periodo de observaciones
+[URL-BASE]hojas-de-vida.html
+
+4. Gaceta Oficial Municipal permanente
+[URL-BASE]gaceta-oficial.html
+
+5. Agenda Regulatoria Anual 2026
+[URL-BASE]agenda-regulatoria-2026.html
+
+6. Participación normativa y SUCOP
+[URL-BASE]participacion-normativa-sucop.html
+
+7. Matriz de cobertura
+[URL-BASE]docs/matriz-cumplimiento.html
+
+8. Política de privacidad
+[URL-BASE]politica-privacidad.html
+
+OBSERVACIÓN OPERATIVA SUCOP:
+El enlace directo institucional debe registrarse en el panel de administración cuando sea habilitado por el DNP. Hasta ese momento la página muestra de forma transparente el estado del trámite y conserva activo el canal local de participación.

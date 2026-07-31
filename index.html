@@ -1,0 +1,341 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Micropágina oficial de decisiones de impacto ciudadano, supervisión, hojas de vida, Gaceta Oficial, Agenda Regulatoria y participación normativa de la Alcaldía de San Pedro, Valle del Cauca.">
+  <meta name="theme-color" content="#01256A">
+  <meta property="og:title" content="Gobierno Abierto y Normativa - San Pedro, Valle del Cauca">
+  <meta property="og:description" content="Decisiones claras, control público, Gaceta Oficial, Agenda Regulatoria y participación ciudadana.">
+  <meta property="og:type" content="website">
+  <title>Gobierno Abierto y Normativa | Alcaldía de San Pedro</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#contenido-principal">Saltar al contenido principal</a>
+
+  <svg class="svg-sprite" aria-hidden="true" focusable="false">
+    <symbol id="i-search" viewBox="0 0 24 24"><path d="m21 21-4.35-4.35m2.35-5.15a7.5 7.5 0 1 1-15 0 7.5 7.5 0 0 1 15 0Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-external" viewBox="0 0 24 24"><path d="M14 5h5v5m0-5-9 9m7 0v5H5V7h5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 10v6m0-9h.01" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+    <symbol id="i-print" viewBox="0 0 24 24"><path d="M7 8V4h10v4M7 17H5a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2h-2m-10-3h10v6H7z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></symbol>
+    <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3v12m-5-5 5 5 5-5M4 19h16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3 20 6v6c0 5-3.4 8-8 9-4.6-1-8-4-8-9V6l8-3Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="m8.5 12 2.2 2.2 4.8-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  </svg>
+
+  <div class="govco-bar">
+    <div class="container govco-inner">
+      <a href="https://www.gov.co/" target="_blank" rel="noopener noreferrer" aria-label="Ir al Portal Único del Estado Colombiano GOV.CO">
+        <img src="assets/govco-logo.svg" alt="GOV.CO">
+      </a>
+      <span>Portal Único del Estado Colombiano</span>
+    </div>
+  </div>
+
+  <div class="utility-bar" aria-label="Herramientas de accesibilidad">
+    <div class="container utility-inner">
+      <div class="utility-label">Herramientas de accesibilidad</div>
+      <div class="utility-actions">
+        <button type="button" class="utility-btn" id="decreaseFont" aria-label="Reducir tamaño del texto">A−</button>
+        <button type="button" class="utility-btn" id="resetFont" aria-label="Restablecer tamaño del texto">A</button>
+        <button type="button" class="utility-btn" id="increaseFont" aria-label="Aumentar tamaño del texto">A+</button>
+        <button type="button" class="utility-btn" id="toggleContrast" aria-pressed="false">Contraste</button>
+        <button type="button" class="utility-btn" id="toggleReadable" aria-pressed="false">Lectura fácil</button>
+      </div>
+    </div>
+  </div>
+
+  <header class="site-header" id="inicio">
+    <div class="container header-main">
+      <a class="brand" href="#inicio" aria-label="Inicio de Gobierno Abierto y Normativa">
+        <img src="assets/escudo-san-pedro.png" alt="Escudo del municipio de San Pedro, Valle del Cauca">
+        <span class="brand-copy">
+          <strong>Alcaldía Municipal de San Pedro</strong>
+          <small>Valle del Cauca · NIT 800.100.526-3</small>
+        </span>
+      </a>
+      <div class="header-actions">
+        <a class="header-link" href="https://www.sanpedro-valle.gov.co/" target="_blank" rel="noopener noreferrer">Sede electrónica <svg><use href="#i-external"/></svg></a>
+        <button type="button" class="menu-toggle" id="menuToggle" aria-expanded="false" aria-controls="mainNav"><svg><use href="#i-menu"/></svg><span>Menú</span></button>
+      </div>
+    </div>
+    <nav class="main-nav" id="mainNav" aria-label="Navegación principal">
+      <div class="container nav-inner">
+        <a href="#decisiones">Decisiones</a>
+        <a href="#supervision">Supervisión</a>
+        <a href="#hojas-vida">Hojas de vida</a>
+        <a href="#gaceta">Gaceta Oficial</a>
+        <a href="#agenda">Agenda regulatoria</a>
+        <a href="#sucop">SUCOP y participación</a>
+        <a href="#glosario">Glosario</a>
+      </div>
+    </nav>
+  </header>
+
+  <main id="contenido-principal">
+    <section class="hero" aria-labelledby="heroTitle">
+      <div class="hero-pattern" aria-hidden="true"></div>
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <div class="eyebrow"><span></span> Fuente única de información pública</div>
+          <h1 id="heroTitle">Gobierno abierto, normativa y <em>participación ciudadana</em></h1>
+          <p>Consulte decisiones que afectan al público, mecanismos de supervisión, hojas de vida sometidas a observaciones, actos de la Gaceta Oficial, Agenda Regulatoria y proyectos normativos.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#decisiones">Explorar información <svg><use href="#i-arrow"/></svg></a>
+            <a class="btn btn-secondary" href="#participar">Presentar observación</a>
+          </div>
+          <div class="hero-meta">
+            <span><svg><use href="#i-check"/></svg> Actualización: <strong id="lastUpdatedText">31 de julio de 2026</strong></span>
+            <span><svg><use href="#i-shield"/></svg> Trazabilidad y archivo permanente</span>
+          </div>
+        </div>
+        <aside class="hero-panel" aria-label="Accesos rápidos">
+          <div class="hero-panel-head">
+            <span>Acceso directo</span>
+            <strong>6 módulos oficiales</strong>
+          </div>
+          <div class="quick-grid">
+            <a href="decisiones-impacto.html"><span>01</span><strong>Decisiones de impacto</strong><small>Fundamentos e interpretación</small></a>
+            <a href="supervision-vigilancia.html"><span>02</span><strong>Supervisión</strong><small>Responsables, canales y procedimientos</small></a>
+            <a href="hojas-de-vida.html"><span>03</span><strong>Hojas de vida</strong><small>Procesos activos e históricos</small></a>
+            <a href="gaceta-oficial.html"><span>04</span><strong>Gaceta Oficial</strong><small>Repositorio permanente</small></a>
+            <a href="agenda-regulatoria-2026.html"><span>05</span><strong>Agenda 2026</strong><small>Orden cronológico y cambios</small></a>
+            <a href="participacion-normativa-sucop.html"><span>06</span><strong>SUCOP</strong><small>Consulta y participación normativa</small></a>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="kpi-section" aria-label="Resumen de publicaciones">
+      <div class="container kpi-grid" id="kpiGrid" aria-live="polite"></div>
+    </section>
+
+    <section class="compliance-strip">
+      <div class="container compliance-grid">
+        <div>
+          <svg><use href="#i-info"/></svg>
+          <div><strong>Publicación institucional consolidada</strong><p>Esta micropágina complementa y enlaza las fuentes oficiales existentes. Cada registro conserva su enlace de origen, fecha de verificación y estado.</p></div>
+        </div>
+        <div class="compliance-links">
+          <a href="docs/matriz-cumplimiento.html">Ver matriz de cobertura</a>
+          <a href="#fuentes">Consultar fuentes</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="decisiones" aria-labelledby="decisionTitle">
+      <div class="container">
+        <div class="section-heading">
+          <div><span class="section-index">01</span><p class="overline">Información que puede afectar al público</p><h2 id="decisionTitle">Decisiones, actos y proyectos con impacto ciudadano</h2><p>Contenido de cada decisión, sus fundamentos, interpretación, dependencia responsable, población afectada, procedimiento y canales de participación.</p></div>
+          <a class="text-link" href="decisiones-impacto.html">Abrir sección independiente <svg><use href="#i-arrow"/></svg></a>
+        </div>
+        <div class="filter-panel" aria-label="Filtros de decisiones">
+          <label class="search-field"><span>Buscar decisión</span><span class="input-wrap"><svg><use href="#i-search"/></svg><input id="decisionSearch" type="search" placeholder="Ej. presupuesto, vivienda, juventud"></span></label>
+          <label><span>Año</span><select id="decisionYear"><option value="">Todos</option></select></label>
+          <label><span>Estado</span><select id="decisionStatus"><option value="">Todos</option></select></label>
+          <button class="btn btn-ghost" type="button" id="clearDecisionFilters">Limpiar filtros</button>
+        </div>
+        <div class="records-grid" id="decisionList" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <section class="section section-tint" id="supervision" aria-labelledby="supervisionTitle">
+      <div class="container">
+        <div class="section-heading">
+          <div><span class="section-index">02</span><p class="overline">Control, seguimiento y vigilancia</p><h2 id="supervisionTitle">Mecanismos internos y externos de supervisión</h2><p>Responsables, alcance, procedimiento, frecuencia, canales de control y evidencia publicada para cada mecanismo.</p></div>
+          <a class="text-link" href="supervision-vigilancia.html">Abrir sección independiente <svg><use href="#i-arrow"/></svg></a>
+        </div>
+        <div class="process-flow" aria-label="Ciclo institucional de supervisión">
+          <div><span>1</span><strong>Planear</strong><small>Riesgos, alcance y responsables</small></div>
+          <div><span>2</span><strong>Verificar</strong><small>Evidencias, pruebas y análisis</small></div>
+          <div><span>3</span><strong>Informar</strong><small>Hallazgos y recomendaciones</small></div>
+          <div><span>4</span><strong>Mejorar</strong><small>Acciones, seguimiento y cierre</small></div>
+        </div>
+        <div class="records-grid" id="supervisionList"></div>
+        <div class="subsection-block">
+          <div class="subsection-head"><h3>Directorio de autoridades y tipos de control</h3><a href="https://www.sanpedro-valle.gov.co/tema/organismos-de-control" target="_blank" rel="noopener noreferrer">Fuente municipal <svg><use href="#i-external"/></svg></a></div>
+          <div class="control-table-wrap"><table class="data-table"><thead><tr><th>Entidad o actor</th><th>Tipo de control</th><th>Alcance</th><th>Canal</th><th>Enlace</th></tr></thead><tbody id="controlEntitiesBody"></tbody></table></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="hojas-vida" aria-labelledby="cvTitle">
+      <div class="container">
+        <div class="section-heading">
+          <div><span class="section-index">03</span><p class="overline">Consideración ciudadana</p><h2 id="cvTitle">Hojas de vida y procesos de observaciones</h2><p>Publicación de procesos activos e históricos, con cargo, fechas, dependencia responsable, documento público y canal para observaciones.</p></div>
+          <a class="text-link" href="hojas-de-vida.html">Abrir sección independiente <svg><use href="#i-arrow"/></svg></a>
+        </div>
+        <div class="notice notice-blue"><svg><use href="#i-info"/></svg><div><strong>Protección de datos personales</strong><p>Las hojas de vida deben publicarse en versión pública. Se deben ocultar cédulas completas, direcciones residenciales, teléfonos personales, firmas, información médica, familiar o cualquier dato no necesario para la finalidad de transparencia.</p></div></div>
+        <div class="tabs" role="tablist" aria-label="Estado de hojas de vida">
+          <button type="button" class="tab is-active" role="tab" aria-selected="true" data-cv-filter="active">Procesos activos</button>
+          <button type="button" class="tab" role="tab" aria-selected="false" data-cv-filter="historical">Archivo histórico</button>
+        </div>
+        <div id="cvList" class="records-grid"></div>
+        <div class="protocol-card">
+          <div><span class="protocol-number">7</span><div><strong>pasos obligatorios</strong><small>para cada nueva publicación</small></div></div>
+          <ol>
+            <li>Identificar el cargo y fundamento del proceso.</li>
+            <li>Preparar la versión pública de la hoja de vida.</li>
+            <li>Definir fecha y hora de apertura y cierre.</li>
+            <li>Publicar el documento y el correo de observaciones.</li>
+            <li>Recibir, radicar y proteger los comentarios.</li>
+            <li>Trasladar las observaciones a la dependencia competente.</li>
+            <li>Cerrar el proceso y conservar el archivo histórico.</li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-dark" id="gaceta" aria-labelledby="gacetaTitle">
+      <div class="container">
+        <div class="section-heading light">
+          <div><span class="section-index">04</span><p class="overline">Repositorio oficial y permanente</p><h2 id="gacetaTitle">Gaceta Oficial Municipal</h2><p>Índice cronológico de acuerdos, actos, compilaciones y notificaciones, con conservación de antecedentes y enlace a la fuente íntegra.</p></div>
+          <a class="text-link" href="gaceta-oficial.html">Abrir Gaceta Oficial <svg><use href="#i-arrow"/></svg></a>
+        </div>
+        <div class="gaceta-tools">
+          <label class="search-field"><span>Buscar en la Gaceta</span><span class="input-wrap"><svg><use href="#i-search"/></svg><input id="gacetaSearch" type="search" placeholder="Número, título, tipo o palabra clave"></span></label>
+          <label><span>Año</span><select id="gacetaYear"><option value="">Todos</option></select></label>
+          <label><span>Tipo de acto</span><select id="gacetaType"><option value="">Todos</option></select></label>
+          <button type="button" class="btn btn-light" id="exportGaceta"><svg><use href="#i-download"/></svg> Descargar CSV</button>
+        </div>
+        <div class="table-shell"><table class="data-table data-table-dark"><thead><tr><th>Fecha</th><th>Tipo</th><th>Número</th><th>Título</th><th>Estado</th><th>Documento</th></tr></thead><tbody id="gacetaBody"></tbody></table></div>
+        <div class="gaceta-footer-links">
+          <a href="https://www.sanpedro-valle.gov.co/tema/normatividad" target="_blank" rel="noopener noreferrer">Repositorio de normatividad municipal <svg><use href="#i-external"/></svg></a>
+          <a href="https://www.sanpedro-valle.gov.co/informacion-adicional/sistema-unico-de-informacion-normativa-suinjuriscol" target="_blank" rel="noopener noreferrer">Consulta SUIN-Juriscol <svg><use href="#i-external"/></svg></a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="agenda" aria-labelledby="agendaTitle">
+      <div class="container">
+        <div class="section-heading">
+          <div><span class="section-index">05</span><p class="overline">Planeación normativa anual</p><h2 id="agendaTitle">Agenda Regulatoria 2026</h2><p>Iniciativas organizadas cronológicamente, con identificación de tipo, responsable, objetivo, impacto, periodo de consulta, estado y modificaciones.</p></div>
+          <div class="heading-actions"><a class="text-link" href="agenda-regulatoria-2026.html">Enlace directo a la Agenda <svg><use href="#i-arrow"/></svg></a><button type="button" class="icon-btn" id="printAgenda" aria-label="Imprimir Agenda Regulatoria"><svg><use href="#i-print"/></svg></button></div>
+        </div>
+        <div class="agenda-meta">
+          <div><small>Vigencia</small><strong>2026</strong></div>
+          <div><small>Versión</small><strong id="agendaVersion">1.0</strong></div>
+          <div><small>Fecha de publicación</small><strong id="agendaDate">31/07/2026</strong></div>
+          <div><small>Iniciativas</small><strong id="agendaCount">0</strong></div>
+        </div>
+        <div class="agenda-list" id="agendaList"></div>
+        <details class="change-log"><summary>Historial de adiciones y modificaciones</summary><div id="agendaChanges"></div></details>
+      </div>
+    </section>
+
+    <section class="section section-tint" id="sucop" aria-labelledby="sucopTitle">
+      <div class="container">
+        <div class="section-heading">
+          <div><span class="section-index">06</span><p class="overline">Consulta pública de proyectos normativos</p><h2 id="sucopTitle">Participación normativa y SUCOP</h2><p>Acceso al Sistema Único de Consulta Pública, proyectos municipales, comentarios, respuestas y canal local complementario.</p></div>
+          <a class="text-link" href="participacion-normativa-sucop.html">Abrir sección independiente <svg><use href="#i-arrow"/></svg></a>
+        </div>
+        <div class="sucop-grid">
+          <article class="sucop-status-card">
+            <div class="status-head"><span class="status-dot warning"></span><strong id="sucopStatusLabel">Habilitación en trámite</strong></div>
+            <h3>Estado de la vinculación institucional</h3>
+            <p id="sucopStatusText"></p>
+            <div class="status-actions">
+              <a class="btn btn-primary" id="sucopEntityLink" href="#" target="_blank" rel="noopener noreferrer" hidden>Ir al perfil institucional en SUCOP</a>
+              <a class="btn btn-outline" href="https://www.sucop.gov.co/busqueda" target="_blank" rel="noopener noreferrer">Buscar procesos en SUCOP</a>
+            </div>
+            <div class="status-foot"><span>Administrado por el Departamento Nacional de Planeación</span><a href="https://www.sucop.gov.co/nosotros/que-es-el-sucop" target="_blank" rel="noopener noreferrer">¿Qué es SUCOP?</a></div>
+          </article>
+          <article class="local-channel-card">
+            <span class="badge">Canal local activo</span>
+            <h3>Proyectos y respuestas en la sede municipal</h3>
+            <p>Mientras se completa la habilitación externa, la ciudadanía puede consultar los proyectos publicados, revisar comentarios y respuestas y presentar observaciones por los canales institucionales.</p>
+            <ul class="check-list">
+              <li><svg><use href="#i-check"/></svg><span>Proyectos normativos para comentarios</span></li>
+              <li><svg><use href="#i-check"/></svg><span>Plazo y dependencia responsable</span></li>
+              <li><svg><use href="#i-check"/></svg><span>Registro de comentarios y documento de respuesta</span></li>
+            </ul>
+            <div class="record-links"><a href="https://www.sanpedro-valle.gov.co/tema/proyectos-de-normas-para-comentarios" target="_blank" rel="noopener noreferrer">Ver proyectos</a><a href="https://www.sanpedro-valle.gov.co/tema/comentarios-y-documento-de-respuesta-a-comentarios" target="_blank" rel="noopener noreferrer">Ver respuestas</a></div>
+          </article>
+        </div>
+
+        <div class="participation-layout" id="participar">
+          <form class="participation-form" id="observationForm" novalidate>
+            <div class="form-head"><div><p class="overline">Participación ciudadana</p><h3>Presentar observación normativa</h3><p>Recibirá un código de seguimiento. Los datos de contacto no serán publicados.</p></div><span class="secure-mark"><svg><use href="#i-shield"/></svg> Canal protegido</span></div>
+            <div class="form-grid">
+              <label class="full"><span>Publicación relacionada <b aria-hidden="true">*</b></span><select id="relatedPublication" required><option value="">Seleccione una publicación</option></select><small>Elija el proyecto, decisión o proceso sobre el cual desea participar.</small></label>
+              <label><span>Nombre o identificación ciudadana <b aria-hidden="true">*</b></span><input id="citizenName" type="text" maxlength="120" autocomplete="name" required></label>
+              <label><span>Correo electrónico <b aria-hidden="true">*</b></span><input id="citizenEmail" type="email" maxlength="180" autocomplete="email" required></label>
+              <label><span>Tipo de participación <b aria-hidden="true">*</b></span><select id="observationType" required><option value="">Seleccione</option><option>Observación</option><option>Propuesta</option><option>Pregunta</option><option>Comentario</option><option>Alerta de cumplimiento</option></select></label>
+              <label><span>Artículo o tema relacionado</span><input id="articleReference" type="text" maxlength="160" placeholder="Ej. artículo 4 o requisitos de postulación"></label>
+              <label class="full"><span>Comentario <b aria-hidden="true">*</b></span><textarea id="observationText" rows="7" minlength="10" maxlength="5000" required></textarea><small><span id="charCount">0</span>/5000 caracteres</small></label>
+              <div class="honeypot" aria-hidden="true"><label>Deje este campo vacío<input id="websiteField" type="text" tabindex="-1" autocomplete="off"></label></div>
+              <label class="checkbox full"><input id="consent" type="checkbox" required><span>Autorizo el tratamiento de mis datos para gestionar esta participación y declaro haber leído la política de tratamiento de datos. <b aria-hidden="true">*</b></span></label>
+            </div>
+            <div class="form-actions"><button class="btn btn-primary" type="submit" id="submitObservation">Radicar observación</button><a href="https://www.sanpedro-valle.gov.co/peticiones-quejas-reclamos" target="_blank" rel="noopener noreferrer">Usar canal PQRSD</a></div>
+            <div class="form-message" id="formMessage" role="status" aria-live="polite"></div>
+          </form>
+          <aside class="tracking-card">
+            <p class="overline">Seguimiento</p><h3>Consultar respuesta pública</h3><p>Ingrese el código entregado al radicar la observación.</p>
+            <label><span>Código de seguimiento</span><input id="trackingCode" type="text" placeholder="SP-NOR-2026-XXXXXX"></label>
+            <button class="btn btn-outline" type="button" id="searchTracking">Consultar estado</button>
+            <div id="trackingResult" class="tracking-result" aria-live="polite"></div>
+            <hr>
+            <h4>Otros canales</h4>
+            <ul class="contact-list">
+              <li><strong>Correo</strong><a href="mailto:alcaldia@sanpedro-valle.gov.co">alcaldia@sanpedro-valle.gov.co</a></li>
+              <li><strong>Teléfono</strong><a href="tel:+576022238356">+57 (602) 223 8356</a></li>
+              <li><strong>Dirección</strong><span>Calle 5 # 3-85 Esquina, San Pedro</span></li>
+            </ul>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="glosario" aria-labelledby="glossaryTitle">
+      <div class="container">
+        <div class="section-heading compact">
+          <div><span class="section-index">07</span><p class="overline">Lenguaje claro</p><h2 id="glossaryTitle">Glosario de gobierno abierto y normativa</h2><p>Definiciones sencillas para comprender los procesos de decisión, control y participación.</p></div>
+          <a class="text-link" href="https://www.sanpedro-valle.gov.co/tema/glosario" target="_blank" rel="noopener noreferrer">Glosario institucional <svg><use href="#i-external"/></svg></a>
+        </div>
+        <label class="glossary-search"><span class="sr-only">Buscar término</span><svg><use href="#i-search"/></svg><input id="glossarySearch" type="search" placeholder="Buscar un término o definición"></label>
+        <div class="glossary-grid" id="glossaryList"></div>
+      </div>
+    </section>
+
+    <section class="section section-sources" id="fuentes" aria-labelledby="sourcesTitle">
+      <div class="container">
+        <div class="section-heading compact"><div><span class="section-index">08</span><p class="overline">Trazabilidad documental</p><h2 id="sourcesTitle">Registro de fuentes verificables</h2><p>Cada publicación enlaza a su fuente oficial. Este registro identifica los principales repositorios consultados y la fecha de verificación.</p></div></div>
+        <div class="source-list" id="sourceList"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div class="footer-brand"><img src="assets/escudo-san-pedro.png" alt=""><div><strong>Alcaldía Municipal de San Pedro</strong><span>Valle del Cauca · NIT 800.100.526-3</span><p>Calle 5 # 3-85 Esquina, Barrio El Centro<br>Código Postal 763030</p></div></div>
+      <div><h2>Contacto</h2><ul><li><a href="tel:+576022238356">+57 (602) 223 8356</a></li><li><a href="mailto:alcaldia@sanpedro-valle.gov.co">alcaldia@sanpedro-valle.gov.co</a></li><li><a href="https://www.sanpedro-valle.gov.co/contactenos/" target="_blank" rel="noopener noreferrer">Canales de atención</a></li><li><a href="https://www.sanpedro-valle.gov.co/peticiones-quejas-reclamos" target="_blank" rel="noopener noreferrer">PQRSD</a></li></ul></div>
+      <div><h2>Enlaces institucionales</h2><ul><li><a href="https://www.sanpedro-valle.gov.co/transparencia" target="_blank" rel="noopener noreferrer">Transparencia</a></li><li><a href="https://www.sanpedro-valle.gov.co/tema/participa" target="_blank" rel="noopener noreferrer">Participa</a></li><li><a href="https://www.sanpedro-valle.gov.co/tema/normatividad" target="_blank" rel="noopener noreferrer">Normatividad</a></li><li><a href="https://www.facebook.com/MunicipioSanPedroValle/?locale=es_LA" target="_blank" rel="noopener noreferrer">Facebook oficial</a></li></ul></div>
+      <div class="footer-logos"><a href="https://www.gov.co/" target="_blank" rel="noopener noreferrer"><img src="assets/govco-logo.svg" alt="GOV.CO"></a><img src="assets/co-colombia.svg" alt="CO Colombia"><button type="button" class="admin-link" id="openAdmin">Administración de contenidos</button></div>
+    </div>
+    <div class="footer-bottom"><div class="container"><span>Última actualización: 31 de julio de 2026</span><div><a href="politica-privacidad.html">Política de privacidad</a><a href="sitemap.xml">Mapa del sitio XML</a><a href="#inicio">Volver arriba</a></div></div></div>
+  </footer>
+
+  <dialog class="modal" id="recordModal" aria-labelledby="recordModalTitle">
+    <div class="modal-shell"><button type="button" class="modal-close" data-close-modal aria-label="Cerrar"><svg><use href="#i-close"/></svg></button><div id="recordModalContent"></div></div>
+  </dialog>
+
+  <dialog class="admin-dialog" id="adminDialog" aria-labelledby="adminTitle">
+    <div class="admin-shell">
+      <header class="admin-header"><div><p>Gestión institucional</p><h2 id="adminTitle">Administración de contenidos</h2></div><button type="button" class="modal-close" id="closeAdmin" aria-label="Cerrar panel"><svg><use href="#i-close"/></svg></button></header>
+      <div id="adminLoginView" class="admin-login"><div class="admin-login-card"><svg><use href="#i-shield"/></svg><h3>Acceso restringido</h3><p>Solo usuarios registrados en la colección de administradores pueden publicar o modificar información.</p><button type="button" class="btn btn-primary" id="adminLogin">Ingresar con Google</button><div id="adminLoginMessage" class="form-message" role="status"></div></div></div>
+      <div id="adminPanelView" class="admin-panel hidden">
+        <aside class="admin-sidebar"><div class="admin-user"><strong id="adminUserName">Administrador</strong><small id="adminUserEmail"></small></div><nav><button class="is-active" data-admin-view="dashboard">Resumen</button><button data-admin-view="publications">Publicaciones</button><button data-admin-view="observations">Observaciones</button><button data-admin-view="configuration">Configuración</button><button data-admin-view="audit">Auditoría</button></nav><button type="button" class="admin-logout" id="adminLogout">Cerrar sesión</button></aside>
+        <section class="admin-content" id="adminContent"></section>
+      </div>
+    </div>
+  </dialog>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>

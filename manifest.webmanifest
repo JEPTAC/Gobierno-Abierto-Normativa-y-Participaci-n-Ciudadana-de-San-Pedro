@@ -1,0 +1,14 @@
+{
+  "name": "Gobierno Abierto y Normativa — San Pedro",
+  "short_name": "Normativa San Pedro",
+  "description": "Decisiones, supervisión, hojas de vida, Gaceta Oficial, Agenda Regulatoria y participación normativa.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f4f7fb",
+  "theme_color": "#01256A",
+  "lang": "es-CO",
+  "icons": [
+    { "src": "assets/favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ]
+}

@@ -1,0 +1,41 @@
+PRUEBAS TÉCNICAS DE ENTREGA
+Micropágina Gobierno Abierto y Normativa — San Pedro, Valle del Cauca
+Fecha de corte: 31 de julio de 2026
+
+1. VALIDACIÓN DE ARCHIVOS
+- 11 páginas HTML revisadas.
+- Sin enlaces locales a archivos inexistentes.
+- Sin identificadores HTML duplicados.
+- app.js, section.js, firebase-config.js y seed-data.js superaron verificación sintáctica con Node.js.
+
+2. RENDERIZADO DE LA PORTADA
+- 5 indicadores de resumen.
+- 6 decisiones de impacto ciudadano.
+- 6 mecanismos de supervisión.
+- 3 registros de hojas de vida/convocatorias.
+- 6 registros de Gaceta Oficial.
+- 5 iniciativas de Agenda Regulatoria.
+- 20 términos de glosario.
+- 14 fuentes institucionales registradas.
+- Sin errores JavaScript durante la prueba de renderizado con datos precargados.
+
+3. PÁGINAS INDEPENDIENTES
+- decisiones-impacto.html: 6 registros.
+- supervision-vigilancia.html: 6 registros y directorio de organismos de control.
+- hojas-de-vida.html: 3 registros, sección activa e histórica.
+- gaceta-oficial.html: 6 registros buscables.
+- agenda-regulatoria-2026.html: 5 iniciativas e historial de cambios.
+- participacion-normativa-sucop.html: 11 publicaciones relacionadas, estado de habilitación y canal local.
+- Sin errores JavaScript en las seis páginas independientes.
+
+4. SEGURIDAD FUNCIONAL
+- Colecciones de datos separadas de otras aplicaciones del proyecto Firebase.
+- Observaciones ciudadanas de lectura privada.
+- Respuestas públicas anonimizadas en colección independiente.
+- Administración condicionada a autenticación y documento de rol activo.
+- Reglas de Firestore incluidas para despliegue.
+- Registro de auditoría de acciones administrativas.
+
+5. EVIDENCIA VISUAL
+- docs/vista-previa-inicio.png
+- docs/vista-previa-decisiones.png

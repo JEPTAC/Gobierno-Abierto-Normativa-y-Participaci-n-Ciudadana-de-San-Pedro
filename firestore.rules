@@ -1,0 +1,80 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function isAdmin() {
+      return signedIn()
+        && exists(/databases/$(database)/documents/gobierno_abierto_admins/$(request.auth.uid))
+        && get(/databases/$(database)/documents/gobierno_abierto_admins/$(request.auth.uid)).data.active == true;
+    }
+
+    function validObservation() {
+      return request.resource.data.keys().hasAll([
+          'ticket', 'publicationId', 'publicationTitle', 'citizenName',
+          'citizenEmail', 'type', 'text', 'consent', 'status', 'createdAtIso'
+        ])
+        && request.resource.data.keys().hasOnly([
+          'ticket', 'publicationId', 'publicationTitle', 'citizenName',
+          'citizenEmail', 'type', 'articleReference', 'text', 'consent',
+          'status', 'source', 'createdAt', 'createdAtIso', 'userAgent'
+        ])
+        && request.resource.data.ticket is string
+        && request.resource.data.ticket.matches('^SP-NOR-[0-9]{4}-[A-Z0-9]{6}$')
+        && request.resource.data.publicationId is string
+        && request.resource.data.publicationId.size() >= 3
+        && request.resource.data.publicationId.size() <= 120
+        && request.resource.data.publicationTitle is string
+        && request.resource.data.publicationTitle.size() <= 260
+        && request.resource.data.citizenName is string
+        && request.resource.data.citizenName.size() >= 2
+        && request.resource.data.citizenName.size() <= 120
+        && request.resource.data.citizenEmail is string
+        && request.resource.data.citizenEmail.size() >= 5
+        && request.resource.data.citizenEmail.size() <= 180
+        && request.resource.data.type is string
+        && request.resource.data.type.size() <= 80
+        && request.resource.data.text is string
+        && request.resource.data.text.size() >= 10
+        && request.resource.data.text.size() <= 5000
+        && request.resource.data.consent == true
+        && request.resource.data.status == 'Radicada';
+    }
+
+    match /gobierno_abierto_publicaciones/{publicationId} {
+      allow get, list: if resource.data.published == true || isAdmin();
+      allow create, update, delete: if isAdmin();
+    }
+
+    match /gobierno_abierto_observaciones/{observationId} {
+      allow create: if validObservation();
+      allow read, update, delete: if isAdmin();
+    }
+
+    match /gobierno_abierto_respuestas_publicas/{responseId} {
+      allow get, list: if resource.data.published == true || isAdmin();
+      allow create, update, delete: if isAdmin();
+    }
+
+    match /gobierno_abierto_config/{configId} {
+      allow get, list: if true;
+      allow create, update, delete: if isAdmin();
+    }
+
+    match /gobierno_abierto_admins/{uid} {
+      allow read: if signedIn() && (request.auth.uid == uid || isAdmin());
+      allow write: if false;
+    }
+
+    match /gobierno_abierto_auditoria/{entryId} {
+      allow read, create: if isAdmin();
+      allow update, delete: if false;
+    }
+
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
