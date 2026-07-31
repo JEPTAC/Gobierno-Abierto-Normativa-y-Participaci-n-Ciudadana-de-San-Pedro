@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-07-31T21:40:00-05:00",
+  "generatedAt": "2026-07-31T17:00:00-05:00",
   "source": {
     "directory": "https://www.sanpedro-valle.gov.co/tema/directorio-de-funcionarios",
     "consolidated": "https://www.sanpedro-valle.gov.co/directorio-de-funcionarios/directorio-de-funcionarios-269806",
@@ -13,9 +13,155 @@
     "status": "Preparado para sincronización automática",
     "lastSuccessfulRun": null,
     "discoveredProfiles": 10,
-    "notes": "El archivo inicial contiene perfiles individuales públicamente localizados. El flujo automático recorre el directorio institucional, incorpora nuevos perfiles y actualiza los existentes sin eliminar el histórico."
+    "notes": "El directorio combina perfiles públicos localizados en la sede electrónica con fichas manuales protegidas de carrera administrativa. Los expedientes laborales originales nunca se copian a GitHub Pages. El flujo automático preserva las fichas protegidas, actualiza perfiles oficiales y conserva el histórico.",
+    "protectedCareerProfiles": 4
   },
   "officials": [
+    {
+      "id": "jorge-ricardo-pelaez-ospina",
+      "name": "Jorge Ricardo Peláez Ospina",
+      "position": "Técnico Administrativo",
+      "department": "Secretaría General y Desarrollo Institucional",
+      "email": "",
+      "phone": "",
+      "profileUrl": "https://www.sanpedro-valle.gov.co/buscar?q=Jorge%20Ricardo%20Pel%C3%A1ez%20Ospina",
+      "sigepUrl": "https://www.funcionpublica.gov.co/sigep2/directorio",
+      "cvUrl": "",
+      "status": "Vinculación documentada",
+      "sourceStatus": "Ingreso por mérito y posesión en empleo de carrera documentados; vigencia actual sujeta a validación institucional periódica.",
+      "sourceUpdatedAt": "2026-07-31",
+      "photoUrl": "",
+      "tags": [
+        "carrera administrativa",
+        "técnico administrativo",
+        "secretaría general",
+        "mérito"
+      ],
+      "employmentType": "Carrera administrativa",
+      "protectedProfile": true,
+      "manualProtected": true,
+      "career": {
+        "employmentCode": "367",
+        "grade": "01",
+        "appointmentType": "Propiedad / carrera administrativa",
+        "selectionProcess": "Proceso de Selección No. 437 de 2017 - Valle del Cauca",
+        "appointmentAct": "Decreto No. 013 del 4 de febrero de 2020",
+        "possessionDate": "2020-02-14",
+        "evidenceSummary": "Acto de nombramiento en periodo de prueba y acta de posesión que identifica el empleo como Técnico Administrativo, código 367, grado 01, de carrera administrativa.",
+        "publicScope": "Se publica únicamente la información funcional y el soporte administrativo mínimo. El expediente laboral integral no se divulga."
+      },
+      "educationSummary": "Formación académica no identificada en los soportes aportados para publicación; debe validarse en SIGEP II o en el perfil institucional.",
+      "experienceSummary": "Vinculación documentada como Técnico Administrativo de la Secretaría General y Desarrollo Institucional desde febrero de 2020."
+    },
+    {
+      "id": "maricel-warner-garzon",
+      "name": "Maricel Warner Garzón",
+      "position": "Técnico Administrativo",
+      "department": "Secretaría de Hacienda",
+      "email": "",
+      "phone": "",
+      "profileUrl": "https://www.sanpedro-valle.gov.co/buscar?q=Maricel%20Warner%20Garz%C3%B3n",
+      "sigepUrl": "https://www.funcionpublica.gov.co/sigep2/directorio",
+      "cvUrl": "",
+      "status": "Vinculación documentada",
+      "sourceStatus": "Ingreso por concurso de méritos documentado; la inscripción o vigencia actual debe contrastarse con SIGEP II y Talento Humano.",
+      "sourceUpdatedAt": "2026-07-31",
+      "photoUrl": "",
+      "tags": [
+        "carrera administrativa",
+        "técnico administrativo",
+        "hacienda",
+        "mérito"
+      ],
+      "employmentType": "Carrera administrativa",
+      "protectedProfile": true,
+      "manualProtected": true,
+      "career": {
+        "employmentCode": "367",
+        "grade": "01",
+        "appointmentType": "Nombramiento en periodo de prueba para empleo de carrera",
+        "selectionProcess": "Proceso de Selección No. 437 de 2017 - Valle del Cauca; OPEC 72558",
+        "appointmentAct": "Decreto No. 016 del 4 de febrero de 2020",
+        "possessionDate": "2020-02",
+        "evidenceSummary": "Resolución CNSC No. 20202310011705 del 16 de enero de 2020 y decreto de nombramiento en periodo de prueba para el empleo Técnico Administrativo, código 367, grado 01.",
+        "publicScope": "La ficha excluye números de identificación, domicilios, teléfonos privados, datos bancarios, familiares, de salud y demás documentos del expediente laboral."
+      },
+      "educationSummary": "Administradora Financiera de la Universidad del Quindío; formación técnica en Contabilidad y Finanzas del SENA.",
+      "experienceSummary": "Ingreso por mérito al empleo Técnico Administrativo de la Secretaría de Hacienda en 2020."
+    },
+    {
+      "id": "jimmy-alexander-alzate",
+      "name": "Jimmy Alexander Alzate",
+      "position": "Técnico Administrativo",
+      "department": "SISBÉN / Secretaría de Planeación",
+      "email": "",
+      "phone": "",
+      "profileUrl": "https://www.sanpedro-valle.gov.co/buscar?q=Jimmy%20Alexander%20Alzate",
+      "sigepUrl": "https://www.funcionpublica.gov.co/sigep2/directorio",
+      "cvUrl": "",
+      "status": "Vinculación documentada",
+      "sourceStatus": "Trayectoria como Técnico Administrativo y soporte de lista de elegibles de carrera documentados; vigencia actual sujeta a validación institucional.",
+      "sourceUpdatedAt": "2026-07-31",
+      "photoUrl": "",
+      "tags": [
+        "carrera administrativa",
+        "técnico administrativo",
+        "SISBÉN",
+        "planeación",
+        "mérito"
+      ],
+      "employmentType": "Carrera administrativa",
+      "protectedProfile": true,
+      "manualProtected": true,
+      "career": {
+        "employmentCode": "367",
+        "grade": "01",
+        "appointmentType": "Empleo del Sistema General de Carrera Administrativa",
+        "selectionProcess": "Proceso de Selección No. 437 de 2017 - Valle del Cauca; OPEC 72573",
+        "appointmentAct": "Resolución CNSC No. 20202310011785 de 2020",
+        "possessionDate": "",
+        "evidenceSummary": "Lista de elegibles para el empleo Técnico Administrativo, código 367, grado 01, y actos laborales institucionales que acreditan el desempeño del cargo.",
+        "publicScope": "No se publica el expediente laboral escaneado. La ficha contiene solo información funcional y de mérito necesaria para transparencia."
+      },
+      "educationSummary": "Administrador Público de la Escuela Superior de Administración Pública (ESAP), título expedido en 2020.",
+      "experienceSummary": "Trayectoria municipal documentada como Técnico Administrativo y responsable de funciones del SISBÉN desde 2013."
+    },
+    {
+      "id": "dahianna-echeverry-santacoloma",
+      "name": "Dahianna Echeverry Santacoloma",
+      "position": "Auxiliar Administrativo",
+      "department": "Secretaría General y Desarrollo Institucional",
+      "email": "",
+      "phone": "",
+      "profileUrl": "https://www.sanpedro-valle.gov.co/buscar?q=Dahianna%20Echeverry%20Santacoloma",
+      "sigepUrl": "https://www.funcionpublica.gov.co/sigep2/directorio",
+      "cvUrl": "",
+      "status": "Vinculación documentada",
+      "sourceStatus": "Nombramiento en propiedad en carrera administrativa documentado mediante certificación institucional.",
+      "sourceUpdatedAt": "2026-07-31",
+      "photoUrl": "",
+      "tags": [
+        "carrera administrativa",
+        "auxiliar administrativo",
+        "secretaría general",
+        "propiedad"
+      ],
+      "employmentType": "Carrera administrativa",
+      "protectedProfile": true,
+      "manualProtected": true,
+      "career": {
+        "employmentCode": "407",
+        "grade": "02",
+        "appointmentType": "Propiedad en carrera administrativa",
+        "selectionProcess": "Vinculación por mérito documentada por la entidad",
+        "appointmentAct": "Certificación institucional expedida el 15 de febrero de 2021",
+        "possessionDate": "2020-02-14",
+        "evidenceSummary": "Certificación de la Secretaría General que acredita desempeño como Auxiliar Administrativo y nombramiento en propiedad en carrera administrativa desde el 14 de febrero de 2020.",
+        "publicScope": "La versión pública omite identificación, afiliaciones, evaluaciones individuales, firmas y demás datos no necesarios para el directorio."
+      },
+      "educationSummary": "Bachiller Comercial de la Institución Educativa Sagrada Familia de Istmina, Chocó.",
+      "experienceSummary": "Auxiliar Administrativo de la Secretaría General y Desarrollo Institucional; nombramiento en propiedad en carrera desde febrero de 2020."
+    },
     {
       "id": "alex-armando-garcia-lozano",
       "name": "Alex Armando García Lozano",
@@ -112,25 +258,6 @@
         "secretaría general",
         "desarrollo institucional",
         "talento humano"
-      ]
-    },
-    {
-      "id": "jimmy-alexander-alzate-c",
-      "name": "Jimmy Alexander Alzate C.",
-      "position": "Técnico Administrativo",
-      "department": "Dependencia por verificar en la fuente institucional",
-      "email": "",
-      "phone": "",
-      "profileUrl": "https://sanpedro-valle.gov.co/directorio-de-funcionarios/cristian-caicedo",
-      "sigepUrl": "https://www.funcionpublica.gov.co/sigep2/directorio",
-      "cvUrl": "https://sanpedro-valle.gov.co/directorio-de-funcionarios/cristian-caicedo",
-      "status": "Activo",
-      "sourceStatus": "Perfil localizado; dependencia y datos de contacto pendientes de actualización en la fuente",
-      "sourceUpdatedAt": "2026-07-31",
-      "photoUrl": "",
-      "tags": [
-        "técnico administrativo",
-        "directorio de funcionarios"
       ]
     },
     {

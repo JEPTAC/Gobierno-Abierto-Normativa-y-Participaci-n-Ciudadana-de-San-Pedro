@@ -31,6 +31,7 @@
       <span><strong>Alcaldía Municipal de San Pedro</strong><small>Gobierno Abierto · Talento Público</small></span>
     </a>
     <nav class="talent-nav" aria-label="Navegación principal">
+      <a href="#carrera">Carrera administrativa</a>
       <a href="#directorio">Directorio</a>
       <a href="#consideracion">Consideración ciudadana</a>
       <a href="#participar">Participar</a>
@@ -62,6 +63,7 @@
           <span><b>✓</b> Enlaces a SIGEP II</span>
           <span><b>✓</b> Sincronización diaria</span>
           <span><b>✓</b> Participación trazable</span>
+          <span><b>✓</b> Expedientes no expuestos</span>
         </div>
       </div>
       <aside class="talent-hero-card" aria-label="Estado de actualización">
@@ -85,6 +87,33 @@
       <article><span class="talent-stat-icon" aria-hidden="true">02</span><div><strong id="statDepartments">0</strong><small>Dependencias representadas</small></div></article>
       <article><span class="talent-stat-icon" aria-hidden="true">03</span><div><strong id="statCvLinks">0</strong><small>Rutas de hoja de vida</small></div></article>
       <article><span class="talent-stat-icon" aria-hidden="true">04</span><div><strong id="statProcesses">0</strong><small>Procesos de consideración</small></div></article>
+      <article><span class="talent-stat-icon" aria-hidden="true">05</span><div><strong id="statCareer">0</strong><small>Perfiles de carrera protegidos</small></div></article>
+    </div>
+  </section>
+
+
+  <section class="talent-section career-showcase" id="carrera">
+    <div class="container">
+      <div class="career-heading">
+        <div>
+          <p class="talent-overline">Mérito, estabilidad y protección de datos</p>
+          <h2>Servidores de carrera administrativa</h2>
+          <p>Fichas públicas construidas a partir de soportes institucionales de ingreso por mérito, nombramiento y posesión. Se divulga únicamente la información funcional necesaria; los expedientes laborales escaneados no se cargan ni se exponen en GitHub Pages.</p>
+        </div>
+        <div class="career-emblem" aria-label="Sistema General de Carrera Administrativa"><span>CNSC</span><strong>Ingreso por mérito</strong><small>Versión pública protegida</small></div>
+      </div>
+
+      <div class="career-grid" id="careerGrid" aria-live="polite"></div>
+
+      <article class="career-protection-card">
+        <div class="career-protection-icon" aria-hidden="true">◈</div>
+        <div>
+          <p class="talent-overline">Protección documental aplicada</p>
+          <h3>El expediente laboral integral permanece fuera del repositorio público</h3>
+          <p>La vista protegida no contiene cédulas, direcciones, teléfonos privados, datos bancarios, afiliaciones, información familiar, evaluaciones individuales, firmas ni documentos médicos. No ofrece descarga ni impresión y añade una marca de agua de sesión. Ningún sitio web puede impedir de forma absoluta una captura realizada desde otro dispositivo; por eso la protección principal consiste en no entregar al navegador el expediente original.</p>
+        </div>
+        <a class="talent-btn talent-btn-blue" href="#participar">Presentar observación</a>
+      </article>
     </div>
   </section>
 
@@ -94,7 +123,7 @@
         <div>
           <p class="talent-overline">Directorio público</p>
           <h2>Funcionarios y servidores de la Alcaldía</h2>
-          <p>Los datos se muestran desde publicaciones oficiales. La hoja de vida se consulta en el perfil institucional o en SIGEP II, evitando replicar información sensible o innecesaria.</p>
+          <p>Los datos se muestran desde publicaciones oficiales y fichas públicas protegidas. Las hojas de vida se consultan en la fuente institucional o en SIGEP II; los expedientes laborales completos no se replican ni se publican.</p>
         </div>
         <a class="talent-text-link" href="https://www.sanpedro-valle.gov.co/buscar?q=hoja%20de%20vida" target="_blank" rel="noopener noreferrer">Consultar búsqueda oficial ↗</a>
       </div>
@@ -102,7 +131,8 @@
       <div class="talent-filter-shell" role="search" aria-label="Filtrar directorio">
         <label class="talent-search-field"><span>Buscar por nombre, cargo o dependencia</span><div><span aria-hidden="true">⌕</span><input id="officialSearch" type="search" autocomplete="off" placeholder="Ej.: Control Interno, Alcalde, Gobierno"></div></label>
         <label><span>Dependencia</span><select id="departmentFilter"><option value="">Todas las dependencias</option></select></label>
-        <label><span>Estado</span><select id="statusFilter"><option value="">Todos</option><option value="Activo">Activo</option><option value="Histórico">Histórico</option></select></label>
+        <label><span>Tipo de vinculación</span><select id="employmentFilter"><option value="">Todas</option><option value="Carrera administrativa">Carrera administrativa</option><option value="No especificado">No especificado</option></select></label>
+        <label><span>Estado</span><select id="statusFilter"><option value="">Todos</option><option value="Activo">Activo</option><option value="Vinculación documentada">Vinculación documentada</option><option value="Histórico">Histórico</option></select></label>
         <button class="talent-filter-clear" id="clearOfficialFilters" type="button">Limpiar</button>
       </div>
 
@@ -224,6 +254,14 @@
   <button class="talent-dialog-close" id="closeProfileDialog" type="button" aria-label="Cerrar">×</button>
   <div id="profileDialogBody"></div>
 </dialog>
+
+
+<dialog class="protected-career-dialog" id="protectedCareerDialog" aria-labelledby="protectedCareerTitle">
+  <button class="talent-dialog-close" id="closeProtectedCareerDialog" type="button" aria-label="Cerrar">×</button>
+  <div class="protected-watermark-layer" id="protectedWatermarkLayer" aria-hidden="true"></div>
+  <div id="protectedCareerBody" class="protected-career-body"></div>
+</dialog>
+
 
 <script type="module" src="hojas-de-vida.js"></script>
 </body>

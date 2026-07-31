@@ -164,6 +164,14 @@ function mergeOfficials(previous, discovered, discoveredUrls = new Set(), direct
   const discoveredIds = new Set(discovered.map((item) => item.id));
 
   for (const previousItem of previous) {
+    if (previousItem.manualProtected === true) {
+      map.set(previousItem.id, {
+        ...previousItem,
+        lastVerificationAttemptAt: now,
+        sourceStatus: previousItem.sourceStatus || "Ficha pública protegida preservada por la sincronización automática."
+      });
+      continue;
+    }
     const profileLocated = discoveredUrls.has(previousItem.profileUrl);
     if (discoveredIds.has(previousItem.id) || profileLocated || !directoryHealthy) {
       map.set(previousItem.id, previousItem);
@@ -203,11 +211,13 @@ function csvCell(value = "") {
 }
 
 function officialsCsv(officials) {
-  const headers = ["Nombre", "Cargo", "Dependencia", "Correo institucional", "Teléfono", "Perfil institucional", "Hoja de vida / SIGEP", "Estado", "Fecha de verificación", "Estado de fuente"];
+  const headers = ["Nombre", "Cargo", "Dependencia", "Tipo de vinculación", "Código", "Grado", "Formación académica pública", "Experiencia laboral pública", "Correo institucional", "Teléfono", "Perfil institucional", "Hoja de vida / SIGEP", "Estado", "Fecha de verificación", "Estado de fuente"];
   const rows = officials.map((item) => [
-    item.name, item.position, item.department, item.email, item.phone,
-    item.profileUrl, item.cvUrl || item.sigepUrl, item.status,
-    item.sourceUpdatedAt, item.sourceStatus
+    item.name, item.position, item.department, item.employmentType || "No especificado",
+    item.career?.employmentCode || "", item.career?.grade || "",
+    item.educationSummary || "", item.experienceSummary || "",
+    item.email, item.phone, item.profileUrl, item.cvUrl || item.sigepUrl,
+    item.status, item.sourceUpdatedAt, item.sourceStatus
   ]);
   return `\uFEFF${[headers, ...rows].map((row) => row.map(csvCell).join(",")).join("\r\n")}\r\n`;
 }

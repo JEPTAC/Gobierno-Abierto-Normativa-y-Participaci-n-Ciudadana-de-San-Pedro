@@ -57,6 +57,24 @@ function setMessage(target, message, type = "") {
   target.textContent = message;
 }
 
+function isCareer(person) {
+  return normalize(person?.employmentType || "").includes("carrera administrativa");
+}
+
+function sessionWatermark() {
+  const now = new Intl.DateTimeFormat("es-CO", {
+    dateStyle: "short",
+    timeStyle: "short",
+    timeZone: "America/Bogota"
+  }).format(new Date());
+  let token = sessionStorage.getItem("talento-protected-session");
+  if (!token) {
+    token = crypto.randomUUID().slice(0, 8).toUpperCase();
+    sessionStorage.setItem("talento-protected-session", token);
+  }
+  return `CONSULTA PÚBLICA · ${token} · ${now}`;
+}
+
 async function loadLocalData() {
   const response = await fetch("data/funcionarios.json", { cache: "no-store" });
   if (!response.ok) throw new Error(`No se pudo cargar el directorio (${response.status}).`);
@@ -70,31 +88,44 @@ function officialCard(person) {
   const email = person.email ? `<a href="mailto:${esc(person.email)}"><b aria-hidden="true">@</b><span>${esc(person.email)}</span></a>` : "";
   const phoneHref = person.phone ? person.phone.replace(/[^+\d]/g, "") : "";
   const phone = person.phone ? `<a href="tel:${esc(phoneHref)}"><b aria-hidden="true">☎</b><span>${esc(person.phone)}</span></a>` : "";
-  return `<article class="official-card" data-id="${esc(person.id)}">
-    <div class="official-card-top"><div class="official-avatar" aria-hidden="true">${esc(initials(person.name))}</div><span class="official-status">${esc(person.status || "Activo")}</span></div>
+  const career = isCareer(person);
+  const primaryAction = person.protectedProfile
+    ? `<button class="official-primary" type="button" data-protected-profile="${esc(person.id)}">Ficha pública protegida</button>`
+    : `<button class="official-primary" type="button" data-profile="${esc(person.id)}">Ver perfil</button>`;
+  const sourceAction = person.protectedProfile
+    ? `<a href="${safeUrl(person.profileUrl)}" target="_blank" rel="noopener noreferrer">Fuente oficial ↗</a>`
+    : `<a href="${safeUrl(person.cvUrl || person.profileUrl)}" target="_blank" rel="noopener noreferrer">Hoja de vida ↗</a>`;
+  return `<article class="official-card${career ? " is-career" : ""}" data-id="${esc(person.id)}">
+    <div class="official-card-top">
+      <div class="official-avatar" aria-hidden="true">${esc(initials(person.name))}</div>
+      <span class="official-status">${esc(person.status || "Activo")}</span>
+      ${career ? `<span class="official-career-badge">Carrera administrativa</span>` : ""}
+    </div>
     <div class="official-card-body">
       <h3>${esc(person.name)}</h3>
       <p class="official-position">${esc(person.position || "Cargo no especificado")}</p>
       <p class="official-department">${esc(person.department || "Dependencia por verificar")}</p>
       <div class="official-details">${email}${phone}</div>
       <div class="official-card-actions">
-        <button class="official-primary" type="button" data-profile="${esc(person.id)}">Ver perfil</button>
-        <a href="${safeUrl(person.cvUrl || person.profileUrl)}" target="_blank" rel="noopener noreferrer">Hoja de vida ↗</a>
+        ${primaryAction}
+        ${sourceAction}
         <button type="button" data-comment="${esc(person.id)}">Comentar</button>
       </div>
     </div>
-    <div class="official-card-meta"><span>Verificado: ${esc(formatDate(person.sourceUpdatedAt))}</span><span>${esc(person.sourceStatus || "Fuente oficial")}</span></div>
+    <div class="official-card-meta"><span>Verificado: ${esc(formatDate(person.sourceUpdatedAt))}</span><span>${career ? "Versión pública minimizada" : esc(person.sourceStatus || "Fuente oficial")}</span></div>
   </article>`;
 }
 
 function renderOfficials() {
   const query = normalize($("#officialSearch")?.value || "");
   const department = $("#departmentFilter")?.value || "";
+  const employment = $("#employmentFilter")?.value || "";
   const status = $("#statusFilter")?.value || "";
   const filtered = state.officials.filter((person) => {
     const haystack = normalize([person.name, person.position, person.department, person.email, ...(person.tags || [])].join(" "));
     return (!query || haystack.includes(query))
       && (!department || person.department === department)
+      && (!employment || (person.employmentType || "No especificado") === employment)
       && (!status || person.status === status);
   });
   const target = $("#officialGrid");
@@ -103,7 +134,89 @@ function renderOfficials() {
     ? filtered.map(officialCard).join("")
     : `<div class="official-empty"><strong>No se encontraron perfiles.</strong><p>Prueba con otro nombre, cargo o dependencia.</p></div>`;
   $("#resultSummary").textContent = `${filtered.length} de ${state.officials.length} perfiles visibles`;
-  bindOfficialActions();
+  bindOfficialActions(target);
+}
+
+function careerCard(person) {
+  const career = person.career || {};
+  return `<article class="career-card">
+    <div class="career-card-glow" aria-hidden="true"></div>
+    <div class="career-card-head">
+      <span class="career-card-seal">Mérito</span>
+      <span class="career-card-status">${esc(person.status || "Documentado")}</span>
+    </div>
+    <div class="career-card-avatar" aria-hidden="true">${esc(initials(person.name))}</div>
+    <p class="career-card-type">${esc(person.employmentType || "Carrera administrativa")}</p>
+    <h3>${esc(person.name)}</h3>
+    <p class="career-card-position">${esc(person.position)}</p>
+    <p class="career-card-department">${esc(person.department)}</p>
+    <dl>
+      <div><dt>Código</dt><dd>${esc(career.employmentCode || "Por verificar")}</dd></div>
+      <div><dt>Grado</dt><dd>${esc(career.grade || "Por verificar")}</dd></div>
+    </dl>
+    <div class="career-card-actions">
+      <button type="button" data-protected-profile="${esc(person.id)}">Consultar ficha protegida</button>
+      <button type="button" data-comment="${esc(person.id)}">Comentar</button>
+    </div>
+  </article>`;
+}
+
+function renderCareer() {
+  const target = $("#careerGrid");
+  if (!target) return;
+  const records = state.officials.filter(isCareer);
+  target.innerHTML = records.length
+    ? records.map(careerCard).join("")
+    : `<div class="official-empty"><strong>No existen perfiles de carrera cargados.</strong><p>La sección permanece habilitada para incorporar fichas públicas validadas.</p></div>`;
+  bindOfficialActions(target);
+}
+
+function openProtectedCareer(person) {
+  const dialog = $("#protectedCareerDialog");
+  const career = person.career || {};
+  const watermark = sessionWatermark();
+  $("#protectedWatermarkLayer").innerHTML = Array.from({ length: 18 }, () => `<span>${esc(watermark)}</span>`).join("");
+  $("#protectedCareerBody").innerHTML = `
+    <header class="protected-career-header">
+      <div class="protected-career-shield" aria-hidden="true">${esc(initials(person.name))}</div>
+      <div>
+        <p>Versión pública protegida · Carrera administrativa</p>
+        <h2 id="protectedCareerTitle">${esc(person.name)}</h2>
+        <span>${esc(person.position)} · ${esc(person.department)}</span>
+      </div>
+    </header>
+    <section class="protected-career-content">
+      <div class="protected-career-alert"><strong>Consulta sin expediente original</strong><span>Esta vista no entrega el PDF laboral, no ofrece descarga ni impresión y excluye datos personales no necesarios.</span></div>
+      <div class="protected-career-facts">
+        <div><small>Tipo de vinculación</small><strong>${esc(person.employmentType || "Carrera administrativa")}</strong></div>
+        <div><small>Código y grado</small><strong>${esc(career.employmentCode || "Por verificar")} · ${esc(career.grade || "Por verificar")}</strong></div>
+        <div><small>Forma de ingreso</small><strong>${esc(career.appointmentType || "Mérito")}</strong></div>
+        <div><small>Posesión / referencia</small><strong>${esc(career.possessionDate ? formatDate(career.possessionDate) : "Consultar acto administrativo")}</strong></div>
+      </div>
+      <div class="protected-career-public-grid">
+        <article class="protected-career-evidence"><small>Formación académica pública</small><h3>Información profesional</h3><p>${esc(person.educationSummary || "Consultar SIGEP II o el perfil institucional.")}</p></article>
+        <article class="protected-career-evidence"><small>Experiencia laboral pública</small><h3>Trayectoria institucional</h3><p>${esc(person.experienceSummary || "Consultar SIGEP II o el perfil institucional.")}</p></article>
+      </div>
+      <article class="protected-career-evidence"><small>Soporte administrativo público</small><h3>${esc(career.appointmentAct || "Soporte institucional verificado")}</h3><p>${esc(career.evidenceSummary || person.sourceStatus || "")}</p></article>
+      <article class="protected-career-evidence is-muted"><small>Proceso de mérito</small><h3>${esc(career.selectionProcess || "Sistema General de Carrera Administrativa")}</h3><p>${esc(career.publicScope || "La entidad divulga únicamente información pública necesaria.")}</p></article>
+      <div class="protected-career-legal">
+        <strong>Protección aplicada</strong>
+        <p>Se omiten números de identificación, direcciones, teléfonos privados, firmas, datos financieros, familiares, de salud, afiliaciones y evaluaciones individuales. La captura externa no puede bloquearse de manera absoluta; por ello el expediente original nunca se entrega al navegador.</p>
+      </div>
+      <div class="protected-career-actions">
+        <a href="${safeUrl(person.sigepUrl)}" target="_blank" rel="noopener noreferrer">Contrastar en SIGEP II ↗</a>
+        <button type="button" data-protected-comment="${esc(person.id)}">Presentar observación</button>
+        <button type="button" data-protected-close>Cerrar</button>
+      </div>
+    </section>`;
+  document.body.classList.add("protected-career-open");
+  dialog.showModal();
+  $("[data-protected-comment]", dialog)?.addEventListener("click", () => {
+    dialog.close();
+    document.body.classList.remove("protected-career-open");
+    selectObservationTarget(`official:${person.id}`);
+  });
+  $("[data-protected-close]", dialog)?.addEventListener("click", () => dialog.close());
 }
 
 function processCard(process) {
@@ -149,6 +262,7 @@ function updateStats() {
   $("#statDepartments").textContent = String(new Set(state.officials.map((person) => person.department).filter(Boolean)).size);
   $("#statCvLinks").textContent = String(state.officials.filter((person) => person.cvUrl || person.sigepUrl || person.profileUrl).length);
   $("#statProcesses").textContent = String(state.processes.length);
+  $("#statCareer").textContent = String(state.officials.filter(isCareer).length);
   const updated = state.metadata?.generatedAt || state.officials[0]?.sourceUpdatedAt;
   if (updated) {
     $("#syncDate").textContent = formatDate(updated);
@@ -159,7 +273,7 @@ function updateStats() {
 function openProfile(person) {
   const dialog = $("#profileDialog");
   const tags = (person.tags || []).map((tag) => `<span>${esc(tag)}</span>`).join(" · ");
-  $("#profileDialogBody").innerHTML = `<div class="talent-profile-head"><div class="official-avatar" aria-hidden="true">${esc(initials(person.name))}</div><h2 id="profileDialogTitle">${esc(person.name)}</h2><p>${esc(person.position)} · ${esc(person.department)}</p></div><div class="talent-profile-content"><div class="talent-profile-facts"><div><small>Correo institucional</small><a href="mailto:${esc(person.email || "")}">${esc(person.email || "No publicado")}</a></div><div><small>Teléfono</small><strong>${esc(person.phone || "No publicado")}</strong></div><div><small>Estado</small><strong>${esc(person.status || "Activo")}</strong></div><div><small>Última verificación</small><strong>${esc(formatDate(person.sourceUpdatedAt))}</strong></div></div><p>${esc(person.sourceStatus || "Información tomada de la fuente institucional.")}</p>${tags ? `<p><strong>Áreas relacionadas:</strong> ${tags}</p>` : ""}<div class="talent-profile-actions"><a class="talent-btn talent-btn-blue" href="${safeUrl(person.profileUrl)}" target="_blank" rel="noopener noreferrer">Perfil institucional ↗</a><a class="talent-btn talent-btn-gold" href="${safeUrl(person.sigepUrl)}" target="_blank" rel="noopener noreferrer">Consultar SIGEP II ↗</a><button class="talent-btn talent-btn-glass" style="color:#0a3f91;border-color:#cbd9e9" type="button" data-modal-comment="${esc(person.id)}">Presentar observación</button></div></div>`;
+  $("#profileDialogBody").innerHTML = `<div class="talent-profile-head"><div class="official-avatar" aria-hidden="true">${esc(initials(person.name))}</div><h2 id="profileDialogTitle">${esc(person.name)}</h2><p>${esc(person.position)} · ${esc(person.department)}</p></div><div class="talent-profile-content"><div class="talent-profile-facts"><div><small>Correo institucional</small><a href="mailto:${esc(person.email || "")}">${esc(person.email || "No publicado")}</a></div><div><small>Teléfono</small><strong>${esc(person.phone || "No publicado")}</strong></div><div><small>Tipo de vinculación</small><strong>${esc(person.employmentType || "No especificado")}</strong></div><div><small>Estado</small><strong>${esc(person.status || "Activo")}</strong></div><div><small>Última verificación</small><strong>${esc(formatDate(person.sourceUpdatedAt))}</strong></div></div><p>${esc(person.sourceStatus || "Información tomada de la fuente institucional.")}</p>${tags ? `<p><strong>Áreas relacionadas:</strong> ${tags}</p>` : ""}<div class="talent-profile-actions"><a class="talent-btn talent-btn-blue" href="${safeUrl(person.profileUrl)}" target="_blank" rel="noopener noreferrer">Perfil institucional ↗</a><a class="talent-btn talent-btn-gold" href="${safeUrl(person.sigepUrl)}" target="_blank" rel="noopener noreferrer">Consultar SIGEP II ↗</a><button class="talent-btn talent-btn-glass" style="color:#0a3f91;border-color:#cbd9e9" type="button" data-modal-comment="${esc(person.id)}">Presentar observación</button></div></div>`;
   dialog.showModal();
   $("[data-modal-comment]", dialog)?.addEventListener("click", () => {
     dialog.close();
@@ -173,12 +287,16 @@ function selectObservationTarget(value) {
   setTimeout(() => $("#observationTarget").focus(), 450);
 }
 
-function bindOfficialActions() {
-  $$('[data-profile]').forEach((button) => button.addEventListener("click", () => {
+function bindOfficialActions(root = document) {
+  $$('[data-profile]', root).forEach((button) => button.addEventListener("click", () => {
     const person = state.officials.find((item) => item.id === button.dataset.profile);
     if (person) openProfile(person);
   }));
-  $$('[data-comment]').forEach((button) => button.addEventListener("click", () => selectObservationTarget(`official:${button.dataset.comment}`)));
+  $$('[data-protected-profile]', root).forEach((button) => button.addEventListener("click", () => {
+    const person = state.officials.find((item) => item.id === button.dataset.protectedProfile);
+    if (person) openProtectedCareer(person);
+  }));
+  $$('[data-comment]', root).forEach((button) => button.addEventListener("click", () => selectObservationTarget(`official:${button.dataset.comment}`)));
 }
 
 function targetMetadata(value) {
@@ -320,13 +438,14 @@ async function searchTracking() {
 }
 
 function bindUi() {
-  ["#officialSearch", "#departmentFilter", "#statusFilter"].forEach((selector) => {
+  ["#officialSearch", "#departmentFilter", "#employmentFilter", "#statusFilter"].forEach((selector) => {
     const element = $(selector);
     element.addEventListener(selector === "#officialSearch" ? "input" : "change", renderOfficials);
   });
   $("#clearOfficialFilters").addEventListener("click", () => {
     $("#officialSearch").value = "";
     $("#departmentFilter").value = "";
+    $("#employmentFilter").value = "";
     $("#statusFilter").value = "";
     renderOfficials();
   });
@@ -341,6 +460,13 @@ function bindUi() {
   }));
   $("#closeProfileDialog").addEventListener("click", () => $("#profileDialog").close());
   $("#profileDialog").addEventListener("click", (event) => { if (event.target === event.currentTarget) event.currentTarget.close(); });
+  $("#closeProtectedCareerDialog").addEventListener("click", () => $("#protectedCareerDialog").close());
+  $("#protectedCareerDialog").addEventListener("close", () => document.body.classList.remove("protected-career-open"));
+  $("#protectedCareerDialog").addEventListener("click", (event) => { if (event.target === event.currentTarget) event.currentTarget.close(); });
+  $("#protectedCareerDialog").addEventListener("contextmenu", (event) => event.preventDefault());
+  $("#protectedCareerDialog").addEventListener("copy", (event) => event.preventDefault());
+  $("#protectedCareerDialog").addEventListener("cut", (event) => event.preventDefault());
+  $("#protectedCareerDialog").addEventListener("dragstart", (event) => event.preventDefault());
   $("#officialObservationForm").addEventListener("submit", submitObservation);
   $("#observationText").addEventListener("input", (event) => { $("#observationCount").textContent = String(event.target.value.length); });
   $("#searchOfficialTracking").addEventListener("click", searchTracking);
@@ -353,6 +479,7 @@ async function init() {
     await loadLocalData();
     fillFilters();
     fillObservationTargets();
+    renderCareer();
     renderOfficials();
     renderProcesses();
     updateStats();
@@ -362,5 +489,20 @@ async function init() {
   }
   await initFirebase();
 }
+
+window.addEventListener("keydown", (event) => {
+  const dialog = $("#protectedCareerDialog");
+  if (!dialog?.open) return;
+  const blocked = (event.ctrlKey || event.metaKey) && ["p", "s", "u", "c"].includes(event.key.toLowerCase());
+  if (blocked) {
+    event.preventDefault();
+    event.stopPropagation();
+  }
+});
+
+window.addEventListener("beforeprint", () => {
+  if ($("#protectedCareerDialog")?.open) document.body.classList.add("protected-print-blocked");
+});
+window.addEventListener("afterprint", () => document.body.classList.remove("protected-print-blocked"));
 
 document.addEventListener("DOMContentLoaded", init);

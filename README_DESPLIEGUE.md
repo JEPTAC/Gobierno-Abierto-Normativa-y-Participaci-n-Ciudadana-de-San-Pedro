@@ -166,3 +166,17 @@ La página `hojas-de-vida.html` fue reemplazada por el módulo **Talento Públic
 El resultado queda en `data/funcionarios.json`. El informe técnico de cada revisión queda en `docs/ultimo-reporte-sincronizacion.json`.
 
 No es necesario crear una nueva colección de Firestore: las observaciones utilizan `gobierno_abierto_observaciones` y las respuestas públicas `gobierno_abierto_respuestas_publicas`, ambas ya protegidas por las reglas integradas.
+
+
+## Talento Público V3 - carrera administrativa
+
+La página `hojas-de-vida.html#carrera` contiene fichas públicas protegidas de servidores de carrera administrativa. No suba los expedientes laborales PDF al repositorio. El paquete ya está diseñado para publicar solo datos funcionales minimizados y conservar los archivos fuente bajo custodia de Talento Humano.
+
+La sincronización diaria reconoce `manualProtected: true`, por lo que no elimina estas fichas aunque la sede electrónica no las devuelva temporalmente. Cuando encuentre un perfil oficial coincidente, actualiza la información institucional y conserva los datos de carrera.
+
+Verifique antes del despliegue:
+
+- que no existan archivos PDF de historias laborales en el repositorio;
+- que las cuatro fichas protegidas abran correctamente;
+- que el formulario de comentarios radique en Firestore;
+- que la URL pública sea `hojas-de-vida.html#carrera`.
